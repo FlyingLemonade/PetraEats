@@ -1,0 +1,139 @@
+/* *{
+  border: 1px solid red
+} */
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+.background {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: white;
+}
+
+.container-semua {
+  margin: 0;
+  overflow: hidden;
+  max-height: 80%;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 1025px) {
+  .h-custom-2 {
+    height: 100%;
+  }
+}
+
+@media (max-width: 765px) {
+  .custom-row{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  .side-image {
+    display: none;
+  }
+  .h-custom-2 {
+    height: 100%;
+  }
+  .image {
+    display: none;
+    background-position: left;
+  }
+  .logos {
+    display: none;
+  }
+
+  section {
+    background-image: url(/assets/login/landingIMG.jpeg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  .container-semua {
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: white;
+    opacity: 0.9;
+  }
+}
+
+.welcome {
+  color: #0d0d0d;
+  font-size: 32px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  line-height: 44.8px;
+  word-wrap: break-word;
+}
+
+.email {
+  color: black;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.password {
+  color: black;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.btn {
+  background-color: #86bbd8;
+  border-radius: 21px;
+  border: 1px black solid;
+  color: #272727;
+  font-size: 15px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.btn:hover {
+  background: #2f4858;
+  border-radius: 21px;
+  border: 1px black solid;
+  color: white;
+  font-size: 15px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.subtext {
+  color: #0d0d0d;
+  font-size: 20px;
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
+}
+
+.forgor {
+  color: #0d0d0d;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
+}
+
+.logos {
+  position: absolute;
+  top: 8px;
+  max-width: 16%;
+  right: 16px;
+}

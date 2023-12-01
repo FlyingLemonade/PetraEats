@@ -45,12 +45,12 @@ a {
   font-family: var(--secondary-font);
 }
 
-#before {
+.before {
   color: var(--title-color);
   font-weight: bold;
   font-size: 1.3rem;
 }
-#current {
+.current {
   color: var(--black-color);
   font-size: 1.3rem;
 }

@@ -52,7 +52,9 @@ return new class extends Migration
             $table->double('nominal');
             $table->string('deskripsi')->nullable();
             $table->string('email_user');
+            $table->string('email_toko');
             $table->foreign('email_user')->references('email')->on('users')->onDelete('cascade');
+            $table->foreign('email_toko')->references('toko_id')->on('pe_toko')->onDelete('cascade');
         });
         Schema::create('pe_detail_order', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');

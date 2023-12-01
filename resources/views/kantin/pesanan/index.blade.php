@@ -32,12 +32,12 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid row">
-      <div class="col-sm-2 col-6 d-flex" id="navbarSupportedContent">
+      <div class="col-sm-2 col-12 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
         <img src="{{ asset('assets/kantin/pesanan/logoPetraEats.png') }}" height="15" alt="MDB Logo" loading="lazy" />
         <span id="petra-eats"><a class="nav-link" href="#">PetraEats</a></span>
       </div>
-      <div class="col-sm-10 col-6 d-flex justify-content-end">
-        <h5 class="me-5 mt-2">{{ auth()->user()->nama }}</h5>
+      <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
+        <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
       </div>
     </div>
   </nav>
@@ -47,13 +47,11 @@
   <section>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-4 col-12">
-          <ul class="d-flex justify-content-start custom-margin">
-            <li id="before">
-              <a href="#">Home<span class="ms-3 me-3">></span></a>
-            </li>
-            <li id="current">Riwayat Pesanan</li>
-          </ul>
+        <div class="col-6 ms-5">
+          <div class="row d-flex justify-content-start custom-margin">
+            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="#">Home<span class="ms-3">></span></a>
+            <div class=" col-sm-8 current ms-lg-1">Riwayat Pesanan</div>
+          </div>
         </div>
       </div>
     </div>
@@ -65,65 +63,45 @@
     <div class="container-fluid">
       <div class="row justify-content-between">
         <div class="col-md-4 col-6 align-items-center d-flex">
-          <h5 class="custom-margin-left">Pesanan</h5>
+          <h5 class="ms-5">Pesanan</h5>
         </div>
         <div class="col-md-7 col-5 d-flex justify-content-end me-3">
-          <button type="button" class="btn btn-warning">Riwayat</button>
+          <button type="button" class="btn btn-warning fw-bold">Riwayat</button>
         </div>
       </div>
       <div class="row custom-box">
+
+        @foreach($customers as $customer)
         <!-- Card -->
         <div class="col-xl-6 mb-4">
-          <div class="card" data-content="1">
-            <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal">
+          <div class="card">
+            <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $customer->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
                   <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->
-                    <p class="fw-bold mb-1">John Doe</p>
+                    <p class="fw-bold mb-1">{{ $customer->nama }}</p>
                     <!-- ID Order -->
-                    <p id="email" class="text-muted mb-1">Nomor Transaksi : </p>
+                    <p id="email" class="text-muted mb-1">Nomor Transaksi : {{ $customer->order_id }}</p>
                   </div>
                 </div>
                 <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-request p-1 me-4"> Pesanan </span>
               </div>
             </div>
             <div class="card-footer p-2 d-flex justify-content-end">
-              <button class="btn btn-success m-0" type="button" data-ripple-color="primary">Terima <i class="fas fa-check"></i></button>
-              <button class="btn btn-danger ms-3" type="button" data-ripple-color="primary">Tolak <i class="fas fa-times"></i></button>
+              <button id="terima" class="btn btn-success m-0" type="button" data-ripple-color="primary">Terima <i class="fas fa-check"></i></button>
+              <button id="tolak" class="btn btn-danger ms-3" type="button" data-ripple-color="primary">Tolak <i class="fas fa-times"></i></button>
             </div>
           </div>
 
         </div>
         <!-- End Card -->
-        <!-- Card -->
-        <div class="col-xl-6 mb-4">
-          <div class="card" data-content="2">
-            <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal">
-              <div class="row d-flex justify-content-between align-items-center">
-                <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
-                  <div class="ms-3">
+        @endforeach
 
-                    <!-- Nama Customer -->
-                    <p class="fw-bold mb-1">John Doe</p>
-                    <!-- ID Order -->
-                    <p id="email" class="text-muted mb-1">Nomor Transaksi : </p>
-                  </div>
-                </div>
-                <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-request p-1 me-4"> Pesanan </span>
-              </div>
-            </div>
-            <div class="card-footer p-2 d-flex justify-content-end">
-              <button class="btn btn-success m-0" type="button" data-ripple-color="primary">Terima <i class="fas fa-check"></i></button>
-              <button class="btn btn-danger ms-3" type="button" data-ripple-color="primary">Tolak <i class="fas fa-times"></i></button>
-            </div>
-          </div>
-          <!-- End Card -->
-        </div>
       </div>
+    </div>
   </section>
 
   <!-- Modal -->

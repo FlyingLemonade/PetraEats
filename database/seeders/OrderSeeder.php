@@ -22,6 +22,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 42000,
                 'deskripsi' => 'Empal Asin, Ayam Pedes',
                 'email_user' => '123@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //2
             ], [
                 'tanggal' => now(),
@@ -29,6 +30,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 60000,
                 'deskripsi' => 'Ayam Pedes Semua',
                 'email_user' => '123@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //3
             ], [
                 'tanggal' => now(),
@@ -36,6 +38,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 18000,
                 'deskripsi' => '',
                 'email_user' => '123@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //4
             ], [
                 'tanggal' => now(),
@@ -43,6 +46,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 20000,
                 'deskripsi' => '',
                 'email_user' => 'Ryan@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //5
             ], [
                 'tanggal' => now(),
@@ -50,6 +54,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 38000,
                 'deskripsi' => '',
                 'email_user' => 'Ryan@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //6
             ], [
                 'tanggal' => now(),
@@ -57,6 +62,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 18000,
                 'deskripsi' => '',
                 'email_user' => 'Niko@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //7
             ], [
                 'tanggal' => now(),
@@ -64,6 +70,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 22000,
                 'deskripsi' => '',
                 'email_user' => 'Niko@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //8
             ], [
                 'tanggal' => now(),
@@ -71,6 +78,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 18000,
                 'deskripsi' => 'Nasi Banyak',
                 'email_user' => '123@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //9
             ], [
                 'tanggal' => now(),
@@ -78,6 +86,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 22000,
                 'deskripsi' => '',
                 'email_user' => 'Daniel@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //10
             ], [
                 'tanggal' => now(),
@@ -85,6 +94,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 40000,
                 'deskripsi' => 'Pedes semua',
                 'email_user' => 'Daniel@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //11
             ], [
                 'tanggal' => now(),
@@ -92,6 +102,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 18000,
                 'deskripsi' => '',
                 'email_user' => 'Yesto@gmail.com',
+                'email_toko' => '234@gmail.com',
                 //12
             ], [
                 'tanggal' => now(),
@@ -99,6 +110,7 @@ class OrderSeeder extends Seeder
                 'nominal' => 42000,
                 'deskripsi' => '',
                 'email_user' => 'Yesto@gmail.com',
+                'email_toko' => '234@gmail.com',
 
             ],
         ];

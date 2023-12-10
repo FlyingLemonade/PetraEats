@@ -1,0 +1,312 @@
+:root {
+  --title-color: #04364a;
+  --black-color: #000;
+  --body-color: #eff0f3;
+  --shadow-color: rgba(105, 105, 105, 0.5);
+  --title-font: "Coustard", serif;
+  --primary-font: "Roboto", sans-serif;
+  --secondary-font: "Quicksand", sans-serif;
+  --request-color: #fc8888;
+  --process-color: #fff266;
+  --done-color: #5bfc79;
+}
+
+/* *{
+    border: 1px solid red;
+} */
+
+body {
+  background-color: var(--body-color);
+}
+a {
+  color: var(--title-color);
+  text-decoration: none;
+}
+.navbar {
+  box-shadow: 0 3px 5px var(--shadow-color); /* Customize or remove the shadow */
+}
+#navbarSupportedContent img {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: var(--title-font);
+  color: var(--title-color);
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* .nota{
+  flex-direction: column;
+  background-color: red;
+} */
+
+.custom-box {
+  border-radius: 10px;
+  box-shadow: 0 3px 10px var(--black-color);
+  padding: 1rem;
+  margin: auto; /* Keep only one margin property */
+  width: 35rem;
+  margin-top: 3rem;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  background-color: white;
+}
+
+.card-title {
+  color: var(--black-color);
+  font-size: 32px;
+  font-family: var(--secondary-font);
+  font-weight: 700;
+  line-height: 44.8px;
+  word-wrap: break-word;
+}
+
+.card-body {
+  display: flex;
+  /* margin-bottom: 13rem; */
+  min-height: 30rem;
+  flex-wrap: wrap;
+}
+.card-footer .sub-text {
+  font-size: 30px;
+  padding: 1rem;
+  text-align: left;
+}
+.card-footer .sub-total {
+  font-size: 20px;
+  padding-top: 1.5rem;
+  padding-right: 4rem;
+  text-align: right;
+}
+
+.order-detail {
+  padding: 1rem;
+  flex: 1;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+tr {
+  background-color: var(--body-color) !important;
+}
+
+td {
+  /* border: 1px solid #ccc; */
+  padding: 0.5rem;
+  text-align: center;
+  height: 50px;
+  vertical-align: middle;
+}
+
+td .row .pesanan {
+  font-size: 20px;
+  font-family: var(--secondary-font);
+  font-weight: 600;
+}
+
+td .row .pesanan img {
+  max-width: 110%;
+  max-height: 70%;
+}
+
+.quantity-value {
+  font-family: var(--secondary-font);
+  font-weight: 600;
+}
+
+.subtotal {
+  vertical-align: bottom;
+}
+.foot {
+  width: auto;
+  margin-top: 5rem;
+  height: 5rem;
+  box-shadow: 0 -3px 5px var(--shadow-color); /* Customize or remove the shadow */
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+}
+
+#price-title {
+  color: var(--black-color);
+  font-size: 25px;
+  font-family: var(--secondary-font);
+  font-weight: 400;
+  word-wrap: break-word;
+  position: relative;
+  left: 30%;
+}
+
+.harga {
+  color: var(--black-color);
+  font-size: 20px;
+  font-family: var(--secondary-font);
+  font-weight: 400;
+}
+
+.btn {
+  background-color: var(--title-color);
+  font-size: 23px;
+  color: var(--body-color);
+  font-family: var(--secondary-font);
+  font-weight: 600;
+  position: relative;
+  right: 30%;
+}
+
+.btn-operation {
+  right: 0;
+}
+
+.btn-operation.btn:hover {
+  background-color: var(--title-color);
+  color: var(--body-color);
+  font-family: var(--secondary-font);
+  font-weight: 600;
+}
+
+.btn-modal {
+  right: 0;
+}
+
+.btn:hover {
+  background-color: var(--title-color);
+  font-size: 23px;
+  color: var(--body-color);
+  font-family: var(--secondary-font);
+  font-weight: 600;
+}
+
+.qr-code {
+  max-width: 200px;
+  margin: 10px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 785px) {
+  .card-footer .sub-text {
+    font-size: 28px;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .card-footer .sub-total {
+    padding: 0;
+    text-align: center;
+    justify-content: center;
+    padding-right: 1.2rem;
+  }
+
+  #price-title {
+    left: 0;
+    position: center;
+  }
+
+  .btn-bayar.btn {
+    right: 0;
+  }
+
+  .foot-right {
+    padding-top: 0;
+    margin: 0;
+  }
+  .foot.row {
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  .qr-code {
+    width: 90%;
+  }
+
+  .modal-content {
+    width: 60%;
+  }
+
+  .btn-modal {
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #petra-eats {
+    display: none;
+  }
+  .me-5 .mt-2 {
+    margin-right: 0px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  table tbody tr td {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  table tbody tr td {
+    font-size: 1%;
+  }
+
+  .quantity-value {
+    position: relative;
+    top: 5px;
+    font-size: medium;
+  }
+
+  table tbody tr td.jumlah {
+    font-size: x-small;
+  }
+}
+
+@media screen and (max-width: 456px) {
+}

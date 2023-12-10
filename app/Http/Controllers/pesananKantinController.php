@@ -17,7 +17,7 @@ class pesananKantinController extends Controller
             ->select('pe_order.*', 'users.nama')
             ->where('pe_order.email_toko', '=', auth()->user()->email)
             ->get();
-        return view("kantin.pesanan.index", compact('customers'));
+        return view("pesanan.index", compact('customers'));
     }
 
     public function logout()

@@ -1,3 +1,19 @@
+
+## Setup
+<ol>
+    <li>Open gitbash and do "git clone git@github.com:FlyingLemonade/PetraEats.git" to copy the repo in your local</li>
+    <li>Copy and paste ".env.example" file in PetraEats Directory rename the copy to ".env"</li>
+    <li>Change the database based on your local database</li>
+    <li>Open gitbash and go to PetraEats directory and do "composer install"</li>
+    <li>Do "npm install" for Node.JS</li>
+    <li>Do "php artisan key:generate" to generate a new APP_KEY in .env file</li>
+    <li>Do "php artisan migrate" to create the database tables</li>
+    <li>Do "php artisan db:seed" to fill teh tables</li>
+    <li>The setup is done</li>
+
+</ol>
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

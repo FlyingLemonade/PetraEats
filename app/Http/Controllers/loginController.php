@@ -42,7 +42,7 @@ class LoginController extends Controller
                 return redirect("mahasiswa/");
             } else if ($user->status_user == 2) {
 
-                return redirect("kantin/pesanan");
+                return redirect("kantin/order");
             }
         }
 

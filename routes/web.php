@@ -30,8 +30,12 @@ Route::group(["middleware" => "auth"], function () {
     Route::group(["middleware" => "isLogin"], function () {
         // Kantin
         Route::group(["prefix" => "/kantin", "middleware" => "can:kantin"], function () {
-            Route::get("/order", [orderPesananController::class, "index"]);
             Route::get("/pesanan", [pesananKantinController::class, "index"]);
+            Route::group(["prefix" => "/order"], function () {
+                Route::get("/", [orderPesananController::class, "index"]);
+                Route::post("/", [orderPesananController::class, 'addMenu'])->name('addMenu');
+                Route::post("/status", [orderPesananController::class, "updateStatus"]);
+            });
         });
 
         // Mahasiswa

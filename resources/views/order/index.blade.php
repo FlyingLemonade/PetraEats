@@ -96,9 +96,22 @@
                 0
               </span>
             </i></a>
+          @if($status[0]->tutup == 0)
           <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal'>Tambah Menu</button>
-          <button class='ms-3 btn btn-danger border border-dark tutup'>TUTUP</button>
-          <!-- <button class='ms-3 btn btn-success btn-sm buka'>OPEN</button> -->
+          @endif
+          @if($status[0]->tutup == 1)
+          <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal' disabled>Tambah Menu</button>
+          @endif
+
+
+          <div class="status-button">
+            @if($status[0]->tutup == 0)
+            <button class='ms-3 btn btn-danger border border-dark tutup col-11' data-content="1">TUTUP</button>
+            @endif
+            @if($status[0]->tutup == 1)
+            <button class='ms-3 btn btn-success border border-dark buka col-11' data-content="0">BUKA</button>
+            @endif
+          </div>
         </div>
         <!-- Direction User Kantin -->
         @endif
@@ -178,11 +191,20 @@
               @endif
               @if(auth()->user()->status_user == 2)
               <!-- Button User Kantin -->
+              @if($status[0]->tutup == 0)
               <div class="col-2 text-end d-flex align-items-end justify-content-end">
                 <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal'>Delete</button>
                 <button type="button" class="btn editButton" style="background-color: #2F4858; color: white;" data-bs-toggle='modal' data-bs-target='#editMenuModal'>
                   Edit</button>
               </div>
+              @endif
+              @if($status[0]->tutup == 1)
+              <div class="col-2 text-end d-flex align-items-end justify-content-end" style="display:none">
+                <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal' style="display:none">Delete</button>
+                <button type="button" class="btn editButton" style="background-color: #2F4858; color: white; display:none" data-bs-toggle='modal' data-bs-target='#editMenuModal'>
+                  Edit</button>
+              </div>
+              @endif
               <!-- Button User Kantin -->
               @endif
             </div>
@@ -258,7 +280,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="editUser">
+          <form id="tambahMenuForm" action="{{ route('addMenu') }} " method="post">
+            {{ csrf_field() }}
             <div class="mb-4">
               <input type="hidden" id="dataContentHidden" value="">
               <label class="col-form-label">Nama Menu</label>
@@ -278,6 +301,7 @@
             </div>
 
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
+
             <button type="submit" id="tambahMenu" class="btn btn-primary">Tambah Menu</button>
 
           </form>
@@ -288,7 +312,10 @@
   @endif
 
 
+
+  <!-- Script -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
   <script>
     function logout() {
       fetch('/logout', {
@@ -308,28 +335,7 @@
           console.error('Logout error', error);
         });
     }
-    // function toPesanan() {
-    //     fetch('/mahasiswa/pesanan', {
-    //             method: 'GET',
-    //             headers: {
-    //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
-    //             },
-    //         })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 window.location.href = '/mahasiswa/pesanan';
-    //             } else {
-    //                 console.error('Fail to Move');
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Error Occur', error);
-    //         });
-    // }
   </script>
-
-  <!-- Script -->
-  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script> -->
   <script src="{{ asset('js/order/script.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

@@ -14,7 +14,12 @@ class orderPesananController extends Controller
         $menus = DB::table('pe_menu')
             ->where('pe_menu.toko_id', '=', auth()->user()->email)
             ->get();
-        return view("order.index", compact('menus'));
+
+        $status = DB::table('pe_toko')
+            ->where('pe_toko.toko_id', '=', auth()->user()->email)
+            ->select('pe_toko.tutup')
+            ->get();
+        return view("order.index", compact('menus', 'status'));
     }
 
     public function submitNota(Request $request)
@@ -71,5 +76,13 @@ class orderPesananController extends Controller
             ->get();
 
         return view("order.index", compact('menus'));
+    }
+    public function updateStatus(Request $request)
+    {
+        $status = $request->input('value');
+        $affected = DB::table('pe_toko')
+            ->where('pe_toko.toko_id', '=', auth()->user()->email)
+            ->update(['tutup' => $status]);
+        return response()->json(['status' => 'success']);
     }
 }

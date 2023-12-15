@@ -283,23 +283,49 @@ $(document).ready(function () {
     $('.buka').trigger('click');
 
     $('.tutup, .buka').on('click', function(e) {
-        var tambahMenuButton = $('.btn-tambah');
+        const tambahMenuButton = $('.btn-tambah');
+        const value = $(this).attr("data-content");
+        const url = "order/status/";
         e.preventDefault();
-        if ($(this).hasClass('tutup')) {
+        if (value == 1) {
             $(this).removeClass('tutup').addClass('buka').text('BUKA');
             $(this).removeClass('btn-danger').addClass('btn-success');
+            $(this).attr("data-content","0")
             // Hide delete and edit buttons when closed
             $('.delButton, .editButton').hide();
-
             tambahMenuButton.prop('disabled', true);
+            console.log(value);
+
         } else {
+            console.log(value);
             $(this).removeClass('buka').addClass('tutup').text('TUTUP');
             $(this).removeClass('btn-success').addClass('btn-danger');
+            $(this).attr("data-content","1")
             $('.delButton, .editButton').show();
 
             // Disable the "Tambah Menu" button
             tambahMenuButton.prop('disabled', false);
         }
+    
+        // Submit
+    
+        $.ajax({
+            url: url,
+            method: "POST",
+            data:{
+                'value' : value
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function () {
+                console.log("Sent");
+
+            },
+            error: function (error) {
+                console.error("Error fetching data:", error);
+            },
+        });
     });
 
     // Add a check before opening the modal
@@ -380,66 +406,77 @@ $(document).ready(function () {
 
 
     $("#tambahMenu").on("click", function () {
-        event.preventDefault();
-        const menuBaru = $("#namaMenuBaru").val();
-        const deskripsiBaru = $("#deskripsiBaru").val();
-        const hargaBaru = $("#hargaBaru").val();
-        
-        const fileInput = $("#fotoMenuBaru")[0]; // Get the file input element
-        const src = fileInput.files[0].name;
+        $.ajax({
+            url: 'kantin/order',
+            type: 'POST',
+            data: $('#tambahMenuForm').serialize(),
+            success: function () {
+                alert('Menu berhasil ditambah');
+                $('#tambahMenuModal').modal('hide');
 
-        console.log(menuBaru);
-        console.log(deskripsiBaru);
-        console.log(hargaBaru);
-        console.log(src);
+            }
+        });
 
-        const lastDataContent = $('#listMenu .main-menu-item:last .content').data('content');
+        // event.preventDefault();
+        // const menuBaru = $("#namaMenuBaru").val();
+        // const deskripsiBaru = $("#deskripsiBaru").val();
+        // const hargaBaru = $("#hargaBaru").val();
 
-        const newDataContent = lastDataContent + 1;
-        console.log(newDataContent);
+        // const fileInput = $("#fotoMenuBaru")[0]; // Get the file input element
+        // const src = fileInput.files[0].name;
 
-        $("#listMenu").append(`
-        <div class="col-xl-4 col-lg-6 col-12 mb-4 main-menu-item">
-            <div class="card ">
-              <div class="card-img-top">
-                <div class="row" style="min-height: 12rem;">
-                  <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                    <img class="fotoMenu rounded img-fluid" src="assets/`+ src +`" alt="">
-                  </div>
-                  <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                    <div class="content" data-content="`+ newDataContent +`">
-                    <h5 id="nama_menu">`+ menuBaru +`</h5>
-                    <p id="deskripsi">`+ deskripsiBaru +`</p>
-                    <p id="harga">Rp `+ hargaBaru + `</p>
-                  </div>
-                  </div>
-                  <!-- Button User mahasiswa -->
-                  <!-- <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                    <button type="button" class="btn addButton " style="background-color: #2F4858; color: white;">
-                        add</button>
-                    <div class="custom-add d-flex align-items-center justify-content-end">
-                        <button id="minusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-minus"></i></button>
-                        <div id="counter" class="fw-bold ms-3 me-3 custom-add-btn counter">1</div>
-                        <button id="plusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-plus"></i></button>
-                    </div>
-                  </div> -->
-                  <!-- Button User mahasiswa -->
+        // console.log(menuBaru);
+        // console.log(deskripsiBaru);
+        // console.log(hargaBaru);
+        // console.log(src);
 
-                  <!-- Button User Kantin -->
-                  <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                    <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal'>Delete</button>
-                    <button type="button" class="btn editButton" style="background-color: #2F4858; color: white;"
-                      data-bs-toggle='modal' data-bs-target='#editMenuModal'>
-                        Edit</button>
-                  </div>
-                  <!-- Button User Kantin -->
-                </div>
-              </div>
-            </div>
-          </div>`);
+        // const lastDataContent = $('#listMenu .main-menu-item:last .content').data('content');
+
+        // const newDataContent = lastDataContent + 1;
+        // console.log(newDataContent);
+
+        // $("#listMenu").append(`
+        // <div class="col-xl-4 col-lg-6 col-12 mb-4 main-menu-item">
+        //     <div class="card ">
+        //       <div class="card-img-top">
+        //         <div class="row" style="min-height: 12rem;">
+        //           <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
+        //             <img class="fotoMenu rounded img-fluid" src="assets/`+ src +`" alt="">
+        //           </div>
+        //           <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
+        //             <div class="content" data-content="`+ newDataContent +`">
+        //             <h5 id="nama_menu">`+ menuBaru +`</h5>
+        //             <p id="deskripsi">`+ deskripsiBaru +`</p>
+        //             <p id="harga">Rp `+ hargaBaru + `</p>
+        //           </div>
+        //           </div>
+        //           <!-- Button User mahasiswa -->
+        //           <!-- <div class="col-2 text-end d-flex align-items-end justify-content-end">
+        //             <button type="button" class="btn addButton " style="background-color: #2F4858; color: white;">
+        //                 add</button>
+        //             <div class="custom-add d-flex align-items-center justify-content-end">
+        //                 <button id="minusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-minus"></i></button>
+        //                 <div id="counter" class="fw-bold ms-3 me-3 custom-add-btn counter">1</div>
+        //                 <button id="plusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-plus"></i></button>
+        //             </div>
+        //           </div> -->
+        //           <!-- Button User mahasiswa -->
+
+        //           <!-- Button User Kantin -->
+        //           <div class="col-2 text-end d-flex align-items-end justify-content-end">
+        //             <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal'>Delete</button>
+        //             <button type="button" class="btn editButton" style="background-color: #2F4858; color: white;"
+        //               data-bs-toggle='modal' data-bs-target='#editMenuModal'>
+        //                 Edit</button>
+        //           </div>
+        //           <!-- Button User Kantin -->
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </div>`);
 
 
-        $('#tambahMenuModal').modal('hide');
+        //$('#tambahMenuModal').modal('hide');
     });
 
     $("#submit-btn").on("click", function () {
@@ -467,6 +504,7 @@ $(document).ready(function () {
             },
         });
     });
+
 });
 
 

@@ -382,24 +382,13 @@ $(document).ready(function () {
     $("#tambahMenu").on("click", function () {
 
         $.ajax({
-            url: 'order',
+            url: 'kantin/order',
             type: 'POST',
             data: $('#tambahMenuForm').serialize(),
-            success: function (response) {
-                if (response.status === 'success') {
-                    alert(response.message);
-                    $('#tambahMenuModal').modal('hide');
-                    window.location.href = 'order';
-                } else {
-                    alert(response.message);
-                    $('#tambahMenuModal').modal('hide');
-                    window.location.href = 'order';
-                }
-            },
-            error: function (response) {
-                alert('Failed to add menu, data');
+            success: function () {
+                alert('Menu berhasil ditambah');
                 $('#tambahMenuModal').modal('hide');
-                window.location.href = 'order';
+                
             }
         });
 

@@ -97,8 +97,13 @@
                   </span>
                 </i></a>
                 <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal'>Tambah Menu</button>
+                @if($status_toko = 0)
                 <button class='ms-3 btn btn-danger border border-dark tutup'>TUTUP</button>
-                <!-- <button class='ms-3 btn btn-success btn-sm buka'>OPEN</button> -->
+                @endif
+                @if($status_toko = 1)
+                <button class='ms-3 btn btn-success border border-dark buka'>BUKA</button>
+                @endif
+               
             </div>
             <!-- Direction User Kantin -->
             @endif

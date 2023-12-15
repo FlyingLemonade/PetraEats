@@ -26,7 +26,10 @@ class orderPesananController extends Controller
                 ->where('pe_toko.kantin_id', '=', $kantinId);
 
             $menus = $query->get();
-            return view("order.index", compact('menus'));
+
+            // Fix the status retrieval
+            $status_toko = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('tutup');
+            return view("order.index", compact('menus', 'status_toko'));
         }
     }
 
@@ -47,36 +50,33 @@ class orderPesananController extends Controller
 
     public function addMenu(Request $request)
     {
-        if ($request->isMethod('post')) {
-            $request->validate([
-                'namaMenuBaru' => 'required',
-                'deskripsiBaru' => 'required',
-                'hargaBaru' => 'required|numeric',
-                'fotoBaru' => 'required'
-            ]);
-    
-            // Retrieve the form data
-            $namaMenu = $request->input('namaMenuBaru');
-            $deskripsi = $request->input('deskripsiBaru');
-            $harga = $request->input('hargaBaru');
-            $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
-    
-            // Insert data into the pe_menu table
-            $menuId = DB::table('pe_menu')->insertGetId([
-                'nama_menu' => $namaMenu,
-                'deskripsi' => $deskripsi,
-                'harga' => $harga,
-                'toko_id' => auth()->user()->email,
-                'kantin_id' => $kantinId,
-            ]);
-    
-            if ($menuId) {
-                // If the insertion is successful
-                return response()->json(['status' => 'success', 'message' => 'Menu added successfully']);
-            } else {
-                // If the insertion fails
-                return response()->json(['status' => 'error', 'message' => 'Data ada yang kosong']);
-            }
-        }
+        
+        $request->validate([
+            'namaMenuBaru' => 'required',
+            'deskripsiBaru' => 'required',
+            'hargaBaru' => 'required|numeric',
+            'fotoMenuBaru' => 'required'
+        ]);
+
+        // Retrieve the form data
+        $namaMenu = $request->input('namaMenuBaru');
+        $deskripsi = $request->input('deskripsiBaru');
+        $harga = $request->input('hargaBaru');
+        $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
+
+        // Insert data into the pe_menu table
+        $menuId = DB::table('pe_menu')->insertGetId([
+            'nama_menu' => $namaMenu,
+            'deskripsi' => $deskripsi,
+            'harga' => $harga,
+            'toko_id' => auth()->user()->email,
+            'kantin_id' => $kantinId,
+        ]);
+
+        if ($menuId) {
+            // If the insertion is successful
+            return redirect('kantin/order');
+        } 
+        
     }
 }

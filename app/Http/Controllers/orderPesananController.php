@@ -10,32 +10,66 @@ class orderPesananController extends Controller
 
     public function index(Request $request)
     {
-        // $customers =  DB::table('pe_order')
-        // ->leftJoin('users', 'users.email', '=', 'pe_order.email_user')
-        // ->select('pe_order.*', 'users.nama')
-        // ->where('pe_order.email_toko', '=', auth()->user()->email)
-        // ->get();
-        // return view("pesanan.index", compact('customers'));
+
         $menus = DB::table('pe_menu')
-        ->where('pe_menu.toko_id', '=', auth()->user()->email)
-        ->get();    
+            ->where('pe_menu.toko_id', '=', auth()->user()->email)
+            ->get();
         return view("order.index", compact('menus'));
     }
 
     public function submitNota(Request $request)
     {
-        
+
         // $orders = [
         //     'namaMenu' => $request->input('namaMenu'),
         //     'harga' => $request->input('harga'),
         //     'fotoMenu' => $request->input('fotoMenu'),
         //     'quantity' => $request->input('quantity'),
-            
+
         // ];
         // dd($orders);
         return redirect("mahasiswa/order/notaPesanan");
         // return redirect("mahasiswa.notaPesanan.index");
     }
+    public function addMenu(Request $request)
+    {
 
+        $request->validate([
+            'namaMenuBaru' => 'required',
+            'deskripsiBaru' => 'required',
+            'hargaBaru' => 'required|numeric',
+            'fotoMenuBaru' => 'required'
+        ]);
 
+        // Retrieve the form data
+        $namaMenu = $request->input('namaMenuBaru');
+        $deskripsi = $request->input('deskripsiBaru');
+        $harga = $request->input('hargaBaru');
+        $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
+
+        // Insert data into the pe_menu table
+        $menuId = DB::table('pe_menu')->insertGetId([
+            'nama_menu' => $namaMenu,
+            'deskripsi' => $deskripsi,
+            'harga' => $harga,
+            'toko_id' => auth()->user()->email,
+            'kantin_id' => $kantinId,
+        ]);
+
+        if ($menuId) {
+            // If the insertion is successful
+            return redirect('kantin/order');
+        }
+    }
+    public function toOrder(Request $request)
+    {
+        $tokoID = $request->input('tokoID');
+        $menus = DB::table('pe_menu')
+            ->leftJoin('pe_toko', 'pe_menu.toko_id', '=', 'pe_toko.toko_id')
+            ->where('pe_menu.toko_id', '=', $tokoID)
+            ->select('pe_menu.*', 'pe_toko.kantin_id')
+            ->get();
+
+        return view("order.index", compact('menus'));
+    }
 }

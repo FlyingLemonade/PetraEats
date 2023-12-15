@@ -16,6 +16,7 @@
             overflow: hidden;
         }
 
+
         @media (max-width: 480px) {
             .mycontainer {
                 display: flex;
@@ -74,6 +75,7 @@
             vertical-align: middle;
             max-height: 100%;
             max-width: 100%;
+            object-fit: cover;
         }
 
         .image {
@@ -105,6 +107,18 @@
             box-shadow: 5px 10px;
             z-index: 1;
         }
+
+        .image:active {
+            filter: grayscale(0%);
+            transition: transform .5s;
+            transform: scale(1.07);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            border-radius: 10px;
+            border: 5px solid #eaf6ff;
+            box-shadow: 5px 10px;
+            z-index: 1;
+            opacity: 50%;
+        }
     </style>
 </head>
 
@@ -119,7 +133,7 @@
             </div>
             <div style="margin-top: 100px;"> </div>
             <div class="mycontainer center">
-                <img class="center" id="profile" style="border-radius: 50%; object-fit: cover;" src="{{ auth()->user()->picture }}" alt="" width="175" height="175">
+                <img class="center" id="profile" style="border-radius: 50%; object-fit: cover;" src="{{ asset('assets/mahasiswa/profile/'. auth()->user()->picture) }}" alt="" width="175" height="175">
             </div>
             <div class=" center ">
                 <p class="center h2 mt-3">{{ auth()->user()->nama }}</p>
@@ -138,65 +152,41 @@
             </div>
         </div>
         <div class="main" style="background-color: black;">
-            <div id="divSplit">
-                <img class="image" src=" {{ asset('assets/mahasiswa/home/KantinP.jpg') }} " alt="Kantin P">
-            </div>
-            <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinQ.jpg') }}" alt="Kantin Q">
-            </div>
-            <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="Kantin W">
-            </div>
-            <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="Kantin T">
-            </div>
+
+            <form id="divSplit" class="form" method="post" action="{{ route('toCanteen') }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="canteenID" value="3">
+                <img type="submit" class="image" src=" {{ asset('assets/kantin/KantinP.jpg') }} " alt="Kantin P">
+            </form>
+
+
+            <form id="divSplit" class="form" method="post" action="{{ route('toCanteen') }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="canteenID" value="4">
+                <img type="submit" class="image" src="{{ asset('assets/kantin/KantinQ.jpg') }}" alt="Kantin Q">
+            </form>
+
+            <form id="divSplit" class="form" method="post" action="{{ route('toCanteen') }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="canteenID" value="1">
+                <img type="submit" class="image" src="{{ asset('assets/kantin/KantinW.jpg') }}" alt="Kantin W">
+            </form>
+
+
+            <form id="divSplit" class="form" method="post" action="{{ route('toCanteen') }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="canteenID" value="2">
+                <img type="submit" class="image" src="{{ asset('assets/kantin/KantinW.jpg') }}" alt="Kantin T">
+            </form>
+
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{{ asset('js/mahasiswa/home/script.js') }} "></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-    <script>
-        function logout() {
-            fetch('/logout', {
-                    method: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/';
-                    } else {
-                        console.error('Logout failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Logout error', error);
-                });
-        }
-
-        function toPesanan() {
-            fetch('/mahasiswa/pesanan', {
-                    method: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/mahasiswa/pesanan';
-                    } else {
-                        console.error('Fail to Move');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error Occur', error);
-                });
-        }
-
-        function toKantin() {
-
-        }
-    </script>
 </body>
 
 </html>

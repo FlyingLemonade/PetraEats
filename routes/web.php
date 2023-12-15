@@ -32,20 +32,17 @@ Route::group(["middleware" => "auth"], function () {
         Route::group(["prefix" => "/kantin", "middleware" => "can:kantin"], function () {
             Route::get("/order", [orderPesananController::class, "index"]);
             Route::get("/pesanan", [pesananKantinController::class, "index"]);
-            
         });
 
         // Mahasiswa
         Route::group(["prefix" => "/mahasiswa", "middleware" => "can:mahasiswa"], function () {
             Route::get("/", [homeController::class, "index"]);
             Route::get("/pesanan", [pesananMahasiswaController::class, "index"]);
-            Route::group(["prefix" => "/listKantin"], function () {
-                Route::get("/", [listKantinController::class, "index"]);
-                Route::group(["prefix" => "/order"], function () {
-                    Route::get("/", [orderPesananController::class, "index"]);
-                    Route::post("/nota", [orderPesananController::class, "submitNota"]);
-                    Route::get("/notaPesanan", [notaPesananController::class, "index"]);
-                });
+            Route::post("/listKantin", [listKantinController::class, "index"])->name('toCanteen');
+            Route::group(["prefix" => "/order"], function () {
+                Route::post("/", [orderPesananController::class, "toOrder"])->name('toOrder');
+                Route::post("/nota", [orderPesananController::class, "submitNota"]);
+                Route::get("/notaPesanan", [notaPesananController::class, "index"]);
             });
         });
 

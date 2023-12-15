@@ -2,6 +2,7 @@
   --title-color: #04364a;
   --black-color: #000;
   --body-color: #eff0f3;
+  --card-color : #4D4D4D;
   --shadow-color: rgba(105, 105, 105, 0.5);
   --title-font: "Coustard", serif;
   --primary-font: "Roboto", sans-serif;
@@ -133,7 +134,8 @@ a {
 }
 
 .rekomen .media-element {
-  background: #343a40;
+  background-color: var(--card-color);
+  box-shadow: 0 3px 5px var(--shadow-color);
   border-radius: 2%;
   color: var(--body-color);
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\pesananKantinController;
 use App\Http\Controllers\pesananMahasiswaController;
 use App\Http\Controllers\notaPesananController;
 use App\Http\Controllers\orderPesananController;
+use App\Http\Controllers\homeControllerKantin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Gate;
 /*
@@ -27,12 +28,11 @@ use Illuminate\Support\Facades\Gate;
 Route::group(["middleware" => "auth"], function () {
     Route::group(["middleware" => "isLogin"], function () {
         // Kantin
-        Route::group(
-            ["prefix" => "/kantin", "middleware" => "can:kantin"],
-            function () {
-                Route::get("/pesanan", [pesananKantinController::class, "index"]);
-            }
-        );
+        Route::group(["prefix" => "/kantin", "middleware" => "can:kantin"], function () {
+            Route::get("/order", [orderPesananController::class, "index"]);
+            Route::get("/pesanan", [pesananKantinController::class, "index"]);
+            
+        });
 
         // Mahasiswa
         Route::group(["prefix" => "/mahasiswa", "middleware" => "can:mahasiswa"], function () {

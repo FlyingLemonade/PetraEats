@@ -40,7 +40,7 @@
           <a class="nav-link" href="/mahasiswa">PetraEats</a>
           @endif
           @if(auth()->user()->status_user == 2)
-          <a class="nav-link" href="/kantin">PetraEats</a>
+          <a class="nav-link" href="order">PetraEats</a>
           @endif
         </span>
       </div>
@@ -61,7 +61,7 @@
             <a class=" col-lg-2 col-md-3 col-sm-4 before" href="/mahasiswa">Home<span class="ms-3">></span></a>
             @endif
             @if(auth()->user()->status_user == 2)
-            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="/kantin">Home<span class="ms-3">></span></a>
+            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="order">Home<span class="ms-3">></span></a>
             @endif
 
             <div class=" col-sm-8 current ms-lg-1">Riwayat Pesanan</div>

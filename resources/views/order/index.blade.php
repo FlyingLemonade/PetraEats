@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-   
     <!-- Google Fonts -->
     <!-- Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
@@ -24,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Coustard&family=Roboto&display=swap" rel="stylesheet" />
 
     <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,45 +31,84 @@
 
     <!-- Font Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Interface Kantin</title>
-
-</head>
-
-<body>
+    <title>Petra Eats</title>
+   
+  </head>
+  <body>
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid row">
-            <div class="col-sm-8 col-12 ms-sm-4 ms-3 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
-                <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="MDB Logo" loading="lazy" />
-                <a id="petra-eats" class="ms-2 nav-link" href="#">PetraEats</a>
-            </div>
-            <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
-                <i class="mt-2 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                    <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger z-3">
-                        0
-                    </span>
-                </i>
-                <h5 class="mt-2 ms-2">Username</h5>
-            </div>
+      <div class="container-fluid row">
+        <div class="col-sm-8 col-12 ms-sm-4 ms-3 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent" >
+          <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="MDB Logo" loading="lazy" />
+          <a id="petra-eats" class="ms-2 nav-link" href="#">PetraEats</a>
         </div>
+        
+        <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
+            @if(auth()->user()->status_user == 1)
+            <!-- Mahasiswa -->
+            <i class="mt-2 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;" 
+            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+              <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0
+              </span>
+            </i>
+            <h5 class="mt-2 ms-2">{{ auth()->user()->nama }}</h5>
+            <!-- Mahasiswa -->
+            @endif
+
+            @if(auth()->user()->status_user == 2)
+            <!-- Kantin -->
+            <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center me-3">
+                <button class="logout btn btn-light border border-dark" onclick="logout()">Logout</button>
+                <h5 class="mt-2 ms-3">{{ auth()->user()->nama }}</h5>
+              </div>
+            <!-- Kantin -->
+            @endif
+
+        </div>
+      </div>
     </nav>
     <!-- Navbar -->
 
-    <!-- Direction -->
+    
     <section>
-        <div class="container-fluid">
-            <div class="row ms-3">
-                <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
-                    <a href="#" class="before ">Home<span class="ms-3 me-3">></span></a>
-                    <a href="#" class="before">Kantin P<span class="ms-3 me-3">></span></a>
-                    <div class="current">Carnival</div>
-                </div>
+      <div class="container-fluid">
+        <div class="row ms-3 me-3">
+            @if(auth()->user()->status_user == 1)
+            <!-- Direction User Mahasiswa -->
+            <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
+                <a href="#" class="before ">Home<span class="ms-3 me-3">></span></a>
+                <a href="#" class="before">Kantin P<span class="ms-3 me-3">></span></a>
+                <div class="current">Carnival</div>
             </div>
+            <!-- Direction User Mahasiswa -->
+            @endif
+            @if(auth()->user()->status_user == 2)
+            <!-- Direction User Kantin -->
+            <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
+                <a href="#" class="current">Home<span class="ms-3 me-3"></span></a>
+            </div>
+            <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column justify-content-end">
+                <a class="nav-link" href="pesanan"><i class="mt-3 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;"
+                data-toggle="tooltip" data-bs-placement="bottom" title="List Pesanan">
+                  <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                  </span>
+                </i></a>
+                <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal'>Tambah Menu</button>
+                <button class='ms-3 btn btn-danger border border-dark tutup'>TUTUP</button>
+                <!-- <button class='ms-3 btn btn-success btn-sm buka'>OPEN</button> -->
+            </div>
+            <!-- Direction User Kantin -->
+            @endif
         </div>
+      </div>
     </section>
-    <!-- End Direction -->
 
-    <!-- SHOPPING CART-->
+    
+    @if(auth()->user()->status_user == 1)
+    <!-- shopping cart offcanvas user mahasiswa -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header" style="border-bottom: 1px groove;">
             <h3 class="offcanvas-title ms-2" id="offcanvasRightLabel">Keranjang</h3>
@@ -80,227 +118,221 @@
             <div class="container">
                 <h5 id="namaKantin">TAMBAHKAN SESUATU TERLEBIH DAHULU!!!</h5>
             </div>
-            <div class="">
+            <div class="container">
                 <table class="table">
                     <tbody id="listPesanan">
-                        <!--NEW LIST HERE-->
+                        
                     </tbody>
                 </table>
             </div>
         </div>
-
         <div class="offcanvas-footer" style="border-top: 1px groove;">
             <div class="container">
                 <div class="row mt-2 mb-2">
                     <div class="col ms-2">
                         <h5>Total Harga</h5>
-                        <span id="totalHarga">-</span>
+                        <span id="totalHarga">Rp 0</span>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn" id="submit-btn" style="align-items: center; background-color: #2F4858; color: white;">Konrimasi Pesanan</button>
+                        <button type="button" class="btn" 
+                        style="align-items: center; background-color: #2F4858; color: white;">Konrimasi Pesanan</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
+    <!-- shopping cart offcanvas user mahasiswa -->
+    @endif
+    
 
     <!-- List Menu -->
     <div class="container-fluid">
-        <div class="row ms-3 me-3 d-flex justify-content-md-start">
-            <!-- Start Card -->
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/kentang.jpeg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">French Fries</h5>
-                                    <p id="deskripsi">Kentang goreng dengan bumbu dan saos pilihan</p>
-                                    <p id="harga">Rp 16.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button id="addButton" type="button" class="btn " style="background-color: #2F4858; color: white;">
-                                    add</button>
-                                <div class="custom-add d-flex align-items-center justify-content-end btn-pesan">
-                                    <button id="minusButton" class="btn custom-add-btn btn-pesan" style="background-color: #2F4858; color: white"><i class="fas fa-minus"></i></button>
-                                    <div id="counter" class="fw-bold ms-3 me-3 custom-add-btn">1</div>
-                                    <button id="plusButton" class="btn custom-add-btn btn-pesan" style="background-color: #2F4858; color: white"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
+        <div id="listMenu" class="row ms-3 me-3 d-flex justify-content-md-start">
+          <!-- Start Card -->
+          @foreach($menus as $menu)
+          <div class="col-xl-4 col-lg-6 col-12 mb-4 main-menu-item">
+            <div class="card ">
+              <div class="card-img-top">
+                <div class="row" style="min-height: 12rem;">
+                  <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
+                    <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/kentang.jpeg') }}" alt="kentang goyeng">
+                  </div>
+                  <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
+                    <div class="content" data-content="{{ $menu->menu_id }}">
+                      <h5 id="nama_menu">{{ $menu->nama_menu }}</h5>
+                      <p id="deskripsi">{{ $menu->deskripsi}}</p>
+                      <p id="harga">Rp {{ $menu->harga }}</p>
                     </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/curlyFries.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Kentang Curly</h5>
-                                    <p id="deskripsi">Kentang curly dengan bumbu dan saos pilihan</p>
-                                    <p id="harga">Rp 16.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
+                  </div>
+                  @if(auth()->user()->status_user == 1)
+                  <!-- Button User mahasiswa -->
+                  <div class="col-2 text-end d-flex align-items-end justify-content-end">
+                    <button type="button" class="btn addButton " style="background-color: #2F4858; color: white;">
+                        add</button>
+                    <div class="custom-add d-flex align-items-center justify-content-end">
+                        <button id="minusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-minus"></i></button>
+                        <div id="counter" class="fw-bold ms-3 me-3 custom-add-btn counter">1</div>
+                        <button id="plusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-plus"></i></button>
                     </div>
+                  </div>
+                  <!-- Button User mahasiswa -->
+                  @endif
+                  @if(auth()->user()->status_user == 2)
+                  <!-- Button User Kantin -->
+                  <div class="col-2 text-end d-flex align-items-end justify-content-end">
+                    <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal'>Delete</button>
+                    <button type="button" class="btn editButton" style="background-color: #2F4858; color: white;"
+                      data-bs-toggle='modal' data-bs-target='#editMenuModal'>
+                        Edit</button>
+                  </div>
+                  <!-- Button User Kantin -->
+                  @endif
                 </div>
+              </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/kulit.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Kulit</h5>
-                                    <p id="deskripsi">Kulit ayam crispy</p>
-                                    <p id="harga">Rp 14.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/tahu.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Tahu Goreng</h5>
-                                    <p id="deskripsi">Tahu goreng dengan bumbu dan saos pilihan</p>
-                                    <p id="harga">Rp 12.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/jamur.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Mushroom Crispy</h5>
-                                    <p id="deskripsi">Jamur goreng dengan bumbu dan saos pilihan</p>
-                                    <p id="harga">Rp 14.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/chickenCrispy.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Chicken Crispy</h5>
-                                    <p id="deskripsi">Potongan ayam goreng crispy</p>
-                                    <p id="harga">Rp 17.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/baksoIkan.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Fish Ball</h5>
-                                    <p id="deskripsi">Bakso ikan, isi 10</p>
-                                    <p id="harga">Rp 16.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-12 mb-4">
-                <div class="card ">
-                    <div class="card-img-top">
-                        <div class="row" style="min-height: 12rem;">
-                            <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/baksoUdang.jpg') }}" alt="kentang goyeng">
-                            </div>
-                            <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-                                <div class="content">
-                                    <h5 id="nama_menu">Shrimp Ball</h5>
-                                    <p id="deskripsi">Bakso udang, isi 8</p>
-                                    <p id="harga">Rp 16.000</p>
-                                </div>
-                            </div>
-                            <div class="col-2 text-end d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-pesan" style="background-color: #2F4858; color: white;"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Card -->
-
-
-
+          </div>
+          @endforeach
+          <!-- End Card -->
         </div>
     </div>
 
+    @if(auth()->user()->status_user == 2)
+    <!-- Confirm Delete Modal -->
+    <div class="modal fade" id="deleteMenuModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="judulDeleteResi">Delete Menu</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="confirmDelete">
+                  <input type="hidden" id="dataContentHidden" value="">
+                  <div class="mb-4 mt-2">
+                      <p id="notifDelete"></p>
+                  </div>
+                  <input type="hidden" id="hiddenName" value="">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                  <button id="confirmDel" type="submit" class="btn btn-danger confirmDel">Ya</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
+    <!--Edit Modal -->
+    <div class="modal fade" id="editMenuModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Menu</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editUser">
+              <div class="mb-4">
+                <input type="hidden" id="dataContentHidden" value="">
+                <label class="col-form-label">Nama Menu</label>
+                <input type="text" class="form-control" id="namaMenuEdit" name="namaMenuEdit">
+              </div>
+              <div class="mb-3">
+                <label class="col-form-label">Deskripsi</label>
+                  <input required class="form-control" id="deskripsiEdit" name="deskripsiEdit"></input>
+              </div>
+              <div class="mb-3">
+                <label class="col-form-label">Harga Menu</label>
+                <input type="number" required class="form-control" id="hargaEdit" name="hargaEdit"></input>
+              </div>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back</button>
+               <button type="submit" id="editMenu" class="btn btn-primary">Edit Menu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Tambah Menu Modal -->
+    <div class="modal fade" id="tambahMenuModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Tambahkan Menu</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUser">
+                    <div class="mb-4">
+                        <input type="hidden" id="dataContentHidden" value="">
+                        <label class="col-form-label">Nama Menu</label>
+                        <input required type="text" class="form-control" id="namaMenuBaru" name="namaMenuBaru">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Deskripsi</label>
+                        <input required class="form-control" id="deskripsiBaru" name="deskripsiBaru"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Harga Menu</label>
+                        <input type="number" required class="form-control" id="hargaBaru" name="hargaBaru"></input>
+                    </div>
+                    <div class="mb-4">
+                      <label class="col-form-label">Foto Menu</label>
+                      <input type="file" required class="form-control" id="fotoMenuBaru" name="fotoMenuBaru"></input>
+                    </div>
+                    
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
+                      <button type="submit" id="tambahMenu" class="btn btn-primary">Tambah Menu</button>
+                   
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+    @endif
 
-
+    <script>
+        function logout() {
+            fetch('/logout', {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/';
+                    } else {
+                        console.error('Logout failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error', error);
+                });
+        }
+        // function toPesanan() {
+        //     fetch('/mahasiswa/pesanan', {
+        //             method: 'GET',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        //             },
+        //         })
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 window.location.href = '/mahasiswa/pesanan';
+        //             } else {
+        //                 console.error('Fail to Move');
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('Error Occur', error);
+        //         });
+        // }
+    </script>
+    
     <!-- Script -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script> -->
     <script src="{{ asset('js/order/script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-</body>
-
+  </body>
 </html>

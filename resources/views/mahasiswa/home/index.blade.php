@@ -15,57 +15,67 @@
             height: 100%;
             overflow: hidden;
         }
+
         @media (max-width: 480px) {
             .mycontainer {
                 display: flex;
                 flex-direction: column;
             }
         }
+
         .general {
             display: flex;
             height: 100%;
             max-height: 100%;
         }
+
         .panel {
             width: 30%;
             height: 100%;
         }
+
         .main {
             width: 100%;
             max-width: 89%;
             height: 100%;
             border: 2px solid;
         }
+
         .mycontainer {
             display: flex;
         }
+
         .justify {
             margin-left: 20%;
             margin-right: auto;
             text-align: justify;
         }
+
         .center {
             text-align: center;
             justify-content: center;
             align-items: center;
         }
+
         .button {
             border-radius: 10px;
             padding: 10px 17px;
             background-color: gainsboro;
         }
+
         #divSplit {
             width: 50%;
             height: 50%;
             float: left;
         }
+
         #divSplit img {
             display: inline-block;
             vertical-align: middle;
             max-height: 100%;
             max-width: 100%;
         }
-    
+
         .image {
             position: relative;
             filter: grayscale(100%);
@@ -78,9 +88,13 @@
             z-index: 0;
             object-fit: cover;
         }
-        #profile image{
-            position: absolute; right: 0; bottom: 10;
+
+        #profile image {
+            position: absolute;
+            right: 0;
+            bottom: 10;
         }
+
         .image:hover {
             filter: grayscale(0%);
             transition: transform .5s;
@@ -105,7 +119,7 @@
             </div>
             <div style="margin-top: 100px;"> </div>
             <div class="mycontainer center">
-                <img class="center" id="profile" style="border-radius: 50%; object-fit: cover;" src="{{ auth()->user()->picture }}" alt="" width="175" height = "175">
+                <img class="center" id="profile" style="border-radius: 50%; object-fit: cover;" src="{{ auth()->user()->picture }}" alt="" width="175" height="175">
             </div>
             <div class=" center ">
                 <p class="center h2 mt-3">{{ auth()->user()->nama }}</p>
@@ -125,16 +139,16 @@
         </div>
         <div class="main" style="background-color: black;">
             <div id="divSplit">
-                <img class="image" src=" {{ asset('assets/mahasiswa/home/KantinP.jpg') }} " alt="">
+                <img class="image" src=" {{ asset('assets/mahasiswa/home/KantinP.jpg') }} " alt="Kantin P">
             </div>
             <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinQ.jpg') }}" alt="">
+                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinQ.jpg') }}" alt="Kantin Q">
             </div>
             <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="">
+                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="Kantin W">
             </div>
             <div id="divSplit">
-                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="">
+                <img class="image" src="{{ asset('assets/mahasiswa/home/KantinW.jpg') }}" alt="Kantin T">
             </div>
         </div>
     </div>
@@ -159,6 +173,7 @@
                     console.error('Logout error', error);
                 });
         }
+
         function toPesanan() {
             fetch('/mahasiswa/pesanan', {
                     method: 'GET',
@@ -177,6 +192,11 @@
                     console.error('Error Occur', error);
                 });
         }
+
+        function toKantin() {
+
+        }
     </script>
 </body>
+
 </html>

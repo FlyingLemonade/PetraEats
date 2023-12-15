@@ -18,6 +18,7 @@ return new class extends Migration
             $table->primary('kantin_id');
         });
         Schema::create('users', function (Blueprint $table) {
+            $table->string('picture');
             $table->string('email');
             $table->string('nama');
             $table->string('no_telepon');

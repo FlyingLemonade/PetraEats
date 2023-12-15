@@ -13,11 +13,25 @@ class TokoSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('pe_toko')->insert([
-            'toko_id' => '234@gmail.com',
-            'nama_toko' => 'Depot NikoHoc',
-            'tutup' => 0,
-            'kantin_id' => 3,
-        ]);
+        $toko = [
+            [
+                'toko_id' => 'carnival@gmail.com',
+                'nama_toko' => 'Carnival',
+                'tutup' => 0,
+                'kantin_id' => 3,
+            ], [
+                'toko_id' => 'japanesefood@gmail.com',
+                'nama_toko' => 'Japanese Food',
+                'tutup' => 0,
+                'kantin_id' => 3,
+            ], [
+                'toko_id' => 'depotkita@gmail.com',
+                'nama_toko' => 'Depot Kita',
+                'tutup' => 0,
+                'kantin_id' => 3,
+            ]
+        ];
+
+        DB::table('pe_toko')->insert($toko);
     }
 }

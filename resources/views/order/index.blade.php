@@ -260,7 +260,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editUser">
+                <form id="tambahMenuForm" action="{{ route('addMenu') }} " method="post">
+                    {{ csrf_field() }}
                     <div class="mb-4">
                         <input type="hidden" id="dataContentHidden" value="">
                         <label class="col-form-label">Nama Menu</label>
@@ -268,19 +269,19 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Deskripsi</label>
-                        <input required class="form-control" id="deskripsiBaru" name="deskripsiBaru"></input>
+                        <input required class="form-control" id="deskripsiBaru" name="deskripsiBaru">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Harga Menu</label>
-                        <input type="number" required class="form-control" id="hargaBaru" name="hargaBaru"></input>
+                        <input type="number" required class="form-control" id="hargaBaru" name="hargaBaru">
                     </div>
                     <div class="mb-4">
                       <label class="col-form-label">Foto Menu</label>
-                      <input type="file" required class="form-control" id="fotoMenuBaru" name="fotoMenuBaru"></input>
+                      <input type="file" required class="form-control" id="fotoMenuBaru" name="fotoMenuBaru">
                     </div>
                     
-                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
-                      <button type="submit" id="tambahMenu" class="btn btn-primary">Tambah Menu</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancel</button>
+                    <button type="submit" id="tambahMenu" class="btn btn-primary">Tambah Menu</button>
                    
                 </form>
             </div>

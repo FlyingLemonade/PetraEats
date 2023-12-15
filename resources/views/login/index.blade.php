@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="password" id="password" class="form-control form-control-lg" name="password" />
+                                <input type="password" id="password" class="form-control form-control-lg" name="password"/>
                                 <label class="password form-label" for="password">Password</label>
                             </div>
 

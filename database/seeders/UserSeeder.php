@@ -96,6 +96,27 @@ class UserSeeder extends Seeder
                 'no_telepon' => '0875433277736',
                 'password' => Hash::make('depotkita'),
                 'status_user' => 2,
+            ],[
+                'picture' => '/depotmapan@gmail.com.jpg',
+                'email' => 'depotmapan@gmail.com',
+                'nama' => 'Depot Mapan',
+                'no_telepon' => '08754323156788',
+                'password' => Hash::make('depotmapan'),
+                'status_user' => 2,
+            ],[
+                'picture' => '/kuenyonya@gmail.com.jpg',
+                'email' => 'kuenyonya@gmail.com',
+                'nama' => 'Kue Nyonya',
+                'no_telepon' => '08754332252636',
+                'password' => Hash::make('kuenyonya'),
+                'status_user' => 2,
+            ],[
+                'picture' => '/sotoayamjago@gmail.com.jpg',
+                'email' => 'sotoayamjago@gmail.com',
+                'nama' => 'Soto Ayam Jago',
+                'no_telepon' => '0813697045945',
+                'password' => Hash::make('sotoayamjago'),
+                'status_user' => 2,
             ]
         ];
 

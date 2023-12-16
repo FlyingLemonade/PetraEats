@@ -16,7 +16,6 @@
             overflow: hidden;
         }
 
-
         @media (max-width: 480px) {
             .mycontainer {
                 display: flex;
@@ -133,7 +132,9 @@
             </div>
             <div style="margin-top: 100px;"> </div>
             <div class="mycontainer center">
+
                 <img class="center" id="profile" style="border-radius: 50%; object-fit: cover;" src="{{ asset('assets/mahasiswa/profile/'. auth()->user()->picture) }}" alt="" width="175" height="175">
+
             </div>
             <div class=" center ">
                 <p class="center h2 mt-3">{{ auth()->user()->nama }}</p>
@@ -186,7 +187,6 @@
     <script src="{{ asset('js/mahasiswa/home/script.js') }} "></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-
 </body>
 
 </html>

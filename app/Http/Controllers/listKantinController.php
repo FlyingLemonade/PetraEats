@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class listKantinController extends Controller
 {
-
 
     function index(Request $request)
     {
@@ -31,5 +31,9 @@ class listKantinController extends Controller
             ->get();
 
         return view("listkantin.index")->with(["canteens" => $data, "recommends" => $recommends, "location" => $canteen]);
+
+    function index()
+    {
+        return view("listkantin.index");
     }
 }

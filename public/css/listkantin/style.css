@@ -136,6 +136,7 @@ a {
 .rekomen .media-element {
   background-color: var(--card-color);
   box-shadow: 0 3px 5px var(--shadow-color);
+  background: #343a40;
   border-radius: 2%;
   color: var(--body-color);
 }

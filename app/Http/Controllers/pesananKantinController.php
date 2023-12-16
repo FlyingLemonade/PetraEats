@@ -14,7 +14,7 @@ class pesananKantinController extends Controller
 
         $customers =  DB::table('pe_order')
             ->leftJoin('users', 'users.email', '=', 'pe_order.email_user')
-            ->select('pe_order.*', 'users.nama')
+            ->select('pe_order.*', 'users.nama', 'users.picture')
             ->where('pe_order.email_toko', '=', auth()->user()->email)
             ->get();
         return view("pesanan.index", compact('customers'));

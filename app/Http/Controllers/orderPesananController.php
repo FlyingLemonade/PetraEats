@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class orderPesananController extends Controller
 {
+    public function toOrder(Request $request)
+    {
+        $tokoID = $request->input('tokoID');
+        $menus = DB::table('pe_menu')
+            ->leftJoin('pe_toko', 'pe_menu.toko_id', '=', 'pe_toko.toko_id')
+            ->leftJoin('pe_kantin', 'pe_toko.kantin_id', '=', 'pe_kantin.kantin_id') // Add this line
+            ->where('pe_menu.toko_id', '=', $tokoID)
+            ->select('pe_menu.*', 'pe_toko.kantin_id', 'pe_toko.nama_toko', 'pe_kantin.nama_kantin') // Include the 'pe_kantin.nama_kantin' column
+            ->get();
+        return view("order.index", compact('menus'));
+    }
 
     public function index(Request $request)
     {
@@ -38,14 +49,6 @@ class orderPesananController extends Controller
     }
     public function addMenu(Request $request)
     {
-
-        // $request->validate([
-        //     'namaMenuBaru' => 'required',
-        //     'deskripsiBaru' => 'required',
-        //     'hargaBaru' => 'required|numeric',
-        //     'fotoMenuBaru' => 'required|mimes:jpeg,png,jpg,gif'
-        // ]);
-
         // Retrieve the form data
         $namaMenu = $request->input('namaMenuBaru');
         $deskripsi = $request->input('deskripsiBaru');
@@ -66,17 +69,7 @@ class orderPesananController extends Controller
             return response()->json(['status' => 'success']);
         }
     }
-    public function toOrder(Request $request)
-    {
-        $tokoID = $request->input('tokoID');
-        $menus = DB::table('pe_menu')
-            ->leftJoin('pe_toko', 'pe_menu.toko_id', '=', 'pe_toko.toko_id')
-            ->where('pe_menu.toko_id', '=', $tokoID)
-            ->select('pe_menu.*', 'pe_toko.kantin_id')
-            ->get();
 
-        return view("order.index", compact('menus'));
-    }
     public function updateStatus(Request $request)
     {
         $status = $request->input('value');

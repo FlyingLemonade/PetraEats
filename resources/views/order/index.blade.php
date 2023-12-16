@@ -79,23 +79,25 @@
         @if(auth()->user()->status_user == 1)
         <!-- Direction User Mahasiswa -->
         <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
-          <a href="#" class="before ">Home<span class="ms-3 me-3">></span></a>
-          <a href="#" class="before">Kantin P<span class="ms-3 me-3">></span></a>
-          <div class="current">Carnival</div>
+          <a href="/mahasiswa" class="before ">Home<span class="ms-3 me-3">></span></a>
+          @for ($i = 0; $i < 1; $i++)
+          <a href="#" class="before">{{ $menus[$i]->nama_kantin}}<span class="ms-3 me-3">></span></a>
+          <div class="current">{{ $menus[$i]->nama_toko}}</div>
+          @endfor
         </div>
         <!-- Direction User Mahasiswa -->
         @endif
-        @if(auth()->user()->status_user == 2)
+        @if(auth()->user()->status_user == 2) 
         <!-- Direction User Kantin -->
         <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
           <a href="#" class="current">Home<span class="ms-3 me-3"></span></a>
         </div>
         <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column justify-content-end">
-          <a class="nav-link" href="pesanan"><i class="mt-3 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;" data-toggle="tooltip" data-bs-placement="bottom" title="List Pesanan">
+          <i onclick="toPesanan()" class="mt-3 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;" data-toggle="tooltip" data-bs-placement="bottom" title="List Pesanan">
               <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 0
               </span>
-            </i></a>
+            </i>
           @if($status[0]->tutup == 0)
           <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal'>Tambah Menu</button>
           @endif
@@ -166,7 +168,7 @@
           <div class="card-img-top">
             <div class="row" style="min-height: 12rem;">
               <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/kentang.jpeg') }}" alt="kentang goyeng">
+                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/'. $menu->picture) }}" alt="kentang goyeng">
               </div>
               <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
                 <div class="content" data-content="{{ $menu->menu_id }}">

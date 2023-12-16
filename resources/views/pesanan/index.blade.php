@@ -64,7 +64,7 @@
             <a class=" col-lg-2 col-md-3 col-sm-4 before" href="order">Home<span class="ms-3">></span></a>
             @endif
 
-            <div class=" col-sm-8 current ms-lg-1">Riwayat Pesanan</div>
+            <div class=" col-sm-8 current ms-lg-1">Pesanan</div>
           </div>
         </div>
       </div>
@@ -79,11 +79,16 @@
         <div class="col-md-4 col-6 align-items-center d-flex">
           <h5 class="ms-5">Pesanan</h5>
         </div>
-        <div class="col-md-7 col-5 d-flex justify-content-end me-3">
-          <button type="button" class="btn btn-warning fw-bold">Riwayat</button>
+        <div class="col-md-7 col-5 d-flex justify-content-end me-5">
+          @if(auth()->user()->status_user == 1)
+          <button onclick="toRiwayatMahasiswa()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
+          @endif
+          @if(auth()->user()->status_user == 2)
+          <button onclick="toRiwayatKantin()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
+          @endif
         </div>
       </div>
-      <div class="row custom-box">
+      <div class="row custom-box ms-5 me-5">
 
 
         @if(auth()->user()->status_user == 2)
@@ -95,7 +100,7 @@
             <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $customer->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                  <img src="{{ asset('assets/mahasiswa/profile/'. $customer->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->
@@ -140,7 +145,7 @@
             <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $order->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                  <img src="{{ asset('assets/kantin/toko/'. $order->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->

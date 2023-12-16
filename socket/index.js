@@ -45,6 +45,24 @@ io.on("connection", function (socket) {
     function findSocketByEmail(email) {
         return connectedSockets.find((socket) => socket.user.email === email);
     }
+     // Pesan Buka atau Tutup Toko
+     socket.on("pesanBukaTutup", ({sender,statusTutup}) => {
+        console.log(sender + " " + statusTutup);
+    
+        // Masukan Ke Data Database
+        // const query =
+        //     "UPDATE pe_toko SET tutup = ? WHERE toko_id = ?";
+        
+        // connection.query(query, [statusTutup, sender]);
+
+        // Kalo Receiver Online kirim ke Receiver
+        
+            socket.broadcast.emit("pesanBukaTutupServer", {
+                sender,
+                statusTutup,
+            });
+        
+    });
     socket.on("pesanTerima", ({ order_id, statusTerima, userTujuan }) => {
         console.log(statusTerima + " " + userTujuan);
         const targetSocket = findSocketByEmail(userTujuan);
@@ -71,6 +89,9 @@ io.on("connection", function (socket) {
             });
         }
     });
+
+   
+
 
     // User Disconect
     socket.on("disconnect", function () {

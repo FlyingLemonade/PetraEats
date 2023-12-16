@@ -30,22 +30,27 @@ Route::group(["middleware" => "auth"], function () {
     Route::group(["middleware" => "isLogin"], function () {
         // Kantin
         Route::group(["prefix" => "/kantin", "middleware" => "can:kantin"], function () {
-            Route::get("/order", [orderPesananController::class, "index"]);
             Route::get("/pesanan", [pesananKantinController::class, "index"]);
-            
+            Route::group(["prefix" => "/order"], function () {
+                Route::get("/", [orderPesananController::class, "index"]);
+                Route::post("/", [orderPesananController::class, 'addMenu'])->name('addMenu');
+                Route::post("/status", [orderPesananController::class, "updateStatus"]);
+                Route::post("/addMenu", [orderPesananController::class, "addMenu"]);
+                Route::post("/status", [orderPesananController::class, "updateStatus"]);
+                Route::post("/deleteMenu", [orderPesananController::class, "deleteMenu"]);
+                Route::post("/editMenu", [orderPesananController::class, "editMenu"]);
+            });
         });
 
         // Mahasiswa
         Route::group(["prefix" => "/mahasiswa", "middleware" => "can:mahasiswa"], function () {
             Route::get("/", [homeController::class, "index"]);
             Route::get("/pesanan", [pesananMahasiswaController::class, "index"]);
-            Route::group(["prefix" => "/listKantin"], function () {
-                Route::get("/", [listKantinController::class, "index"]);
-                Route::group(["prefix" => "/order"], function () {
-                    Route::get("/", [orderPesananController::class, "index"]);
-                    Route::post("/nota", [orderPesananController::class, "submitNota"]);
-                    Route::get("/notaPesanan", [notaPesananController::class, "index"]);
-                });
+            Route::post("/listKantin", [listKantinController::class, "index"])->name('toCanteen');
+            Route::group(["prefix" => "/order"], function () {
+                Route::post("/", [orderPesananController::class, "toOrder"])->name('toOrder');
+                Route::post("/nota", [orderPesananController::class, "submitNota"]);
+                Route::get("/notaPesanan", [notaPesananController::class, "index"]);
             });
         });
 
@@ -60,6 +65,7 @@ Route::middleware('LoggedIn')->group(function () {
 });
 
 Route::get('/getOrder/{orderID}', [DetailOrderController::class, "getOrder"])->middleware("APIBlocker");
+Route::get('/getToko/{tokoID}', [orderPesananController::class, "getToko"])->middleware("APIBlocker");
 
 /*
 To do :

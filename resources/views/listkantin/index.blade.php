@@ -80,13 +80,13 @@
 
         @foreach( $canteens as $canteen)
 
-        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal">
+        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal" style="cursor : pointer">
             {{ csrf_field() }}
             <input type="hidden" value="{{ $canteen->toko_id }}" name="tokoID">
             @if( $canteen->tutup == 1)
             <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" alt="">
             @else
-            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" style="filter : grayscale(100%); pointer-events : none" alt="">
+            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" style="filter : grayscale(100%)" alt="">
             @endif
             <p class="title">{{ $canteen->nama_toko }}</p>
         </form>

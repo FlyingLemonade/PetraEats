@@ -27,12 +27,14 @@ return new class extends Migration
             $table->primary('email');
         });
         Schema::create('pe_toko', function (Blueprint $table) {
-            $table->string('picture');
+
             $table->string('toko_id');
             $table->string('nama_toko');
             $table->unsignedBigInteger('kantin_id');
             $table->integer('tutup');
             $table->primary('toko_id');
+            $table->string('picture');
+            $table->string('qr_picture');
             $table->foreign('kantin_id')->references('kantin_id')->on('pe_kantin')->onDelete('cascade');
             $table->foreign('toko_id')->references('email')->on('users')->onDelete('cascade');
         });

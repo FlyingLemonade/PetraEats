@@ -41,12 +41,10 @@ $(document).ready(function(){
             // Buka
             
             selected.css("filter", "");
-            selected.css("pointer-events", "");
-           selected.attr("data-content","enabled");
+            selected.attr("data-content","enabled");
         }else{
             // Tutup
             selected.css("filter", "grayscale(100%)");
-            selected.css("pointer-events", "none");
             selected.attr("data-content","disabled");
         }
      });

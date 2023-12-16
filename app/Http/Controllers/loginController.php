@@ -23,7 +23,7 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ], [
-            'email.required' => 'Email Tidak Bol eh Kosong',
+            'email.required' => 'Email Tidak Boleh Kosong',
             'password.required' => 'Password Tidak Boleh Kosong',
         ]);
 

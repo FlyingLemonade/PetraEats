@@ -29,3 +29,44 @@ $(document).ready(function () {
         });
     });
 });
+
+function toRiwayatMahasiswa() {
+    fetch('/mahasiswa/riwayat', {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/mahasiswa/riwayat';
+        } else {
+            console.error('Fail to Move');
+        }
+    })
+    .catch(error => {
+        console.error('Error Occur', error);
+    });
+
+    
+}
+
+function toRiwayatKantin ()
+ {
+    fetch('/kantin/riwayat', {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/kantin/riwayat';
+        } else {
+            console.error('Fail to Move');
+        }
+    })
+    .catch(error => {
+        console.error('Error Occur', error);
+    });
+ }

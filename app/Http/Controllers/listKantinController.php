@@ -20,12 +20,16 @@ class listKantinController extends Controller
             ->select('pe_toko.*', 'pe_kantin.*')
             ->get();
 
+        $canteen = DB::table('pe_kantin')
+            ->where('pe_kantin.kantin_id', '=', $canteenID)
+            ->get();
+
         $recommends = DB::table('pe_menu')
             ->leftJoin("pe_toko", "pe_toko.toko_id", "=", "pe_menu.toko_id")
             ->where("pe_toko.kantin_id", "=", $canteenID)
             ->select('pe_menu.*', 'pe_toko.kantin_id')
             ->get();
 
-        return view("listkantin.index")->with(["canteens" => $data, "recommends" => $recommends]);
+        return view("listkantin.index")->with(["canteens" => $data, "recommends" => $recommends, "location" => $canteen]);
     }
 }

@@ -24,7 +24,7 @@ class LoggedIn
                 return redirect("mahasiswa")->withErrors("Anda Sudah Login");
             } else if ($user->status_user == 2) {
 
-                return redirect("kantin/pesanan")->withErrors("Anda Sudah Login");
+                return redirect("kantin/order")->withErrors("Anda Sudah Login");
             }
         }
 

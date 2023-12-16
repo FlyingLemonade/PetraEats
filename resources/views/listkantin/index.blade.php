@@ -37,18 +37,18 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid row">
-            <div class="col-sm-2 col-12 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
+            <div class="col-sm-8 col-12  ms-sm-4  d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
                 <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="PE Logo" loading="lazy" />
                 <span id="petra-eats">
                     @if(auth()->user()->status_user == 1)
-                    <a class="nav-link" href="/mahasiswa">PetraEats</a>
+                    <a class="nav-link" href="/">PetraEats</a>
                     @endif
                     @if(auth()->user()->status_user == 2)
-                    <a class="nav-link" href="/kantin">PetraEats</a>
+                    <a class="nav-link" href="/">PetraEats</a>
                     @endif
                 </span>
             </div>
-            <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
+            <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
                 <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
             </div>
         </div>
@@ -60,9 +60,9 @@
         <div class="container-fluid">
             <div class="row ms-3">
                 <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
-                    <a href="#" class="before ">Home<span class="ms-3 me-3">></span></a>
+                    <a href="/" class="before ">Home<span class="ms-3 me-3">></span></a>
                     <!-- <a href="#" class="before">Kantin P<span class="ms-3 me-3">></span></a> -->
-                    <div class="current">{{ $canteens[0]->nama_kantin }}</div>
+                    <div class="current">{{ $location[0]->nama_kantin }}</div>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <form action="{{ route('toOrder') }}" class="media-element canteen" method="post">
             {{ csrf_field() }}
             <input type="hidden" value="{{ $canteen->toko_id }}" name="tokoID">
-            <img src="{{ asset('assets/foods/aw.jpg') }}" alt="">
+            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" alt="">
             <p class="title">{{ $canteen->nama_toko }}</p>
         </form>
         @endforeach
@@ -109,16 +109,16 @@
     <!-- Start Menu -->
     <div class="container-fluid">
         <div class="row gap-4 d-flex justify-content-center mb-4">
+            @if(count($recommends) > 0)
             @for ($i = 0; $i < 3; $i++) <div class="card col-md-4 col-12 border-2 ms-1" style="width: 22rem;">
-                <img src="{{ asset('assets/foods/kulit.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('assets/foods/'.$recommends[$i]->picture) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ $recommends[$i]->nama_menu }}</h5>
                     <p class="card-text">{{ $recommends[$i]->deskripsi }}</p>
-
                 </div>
         </div>
-
         @endfor
+        @endif
     </div>
     </div>
     <!-- End Menu -->

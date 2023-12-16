@@ -26,7 +26,7 @@
   <link href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- CSS -->
   <link rel="stylesheet" href="{{ asset('css/pesanan/style.css') }}" />
-  <title>Pesanan || Kantin</title>
+  <title>Pesanan || PetraEats</title>
 </head>
 
 <body>

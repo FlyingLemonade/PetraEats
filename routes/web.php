@@ -35,6 +35,10 @@ Route::group(["middleware" => "auth"], function () {
                 Route::get("/", [orderPesananController::class, "index"]);
                 Route::post("/", [orderPesananController::class, 'addMenu'])->name('addMenu');
                 Route::post("/status", [orderPesananController::class, "updateStatus"]);
+                Route::post("/addMenu", [orderPesananController::class, "addMenu"]);
+                Route::post("/status", [orderPesananController::class, "updateStatus"]);
+                Route::post("/deleteMenu", [orderPesananController::class, "deleteMenu"]);
+                Route::post("/editMenu", [orderPesananController::class, "editMenu"]);
             });
         });
 

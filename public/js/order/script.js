@@ -505,6 +505,13 @@ $(document).ready(function () {
         });
     });
 
+
+    $("#backToCanteen").on("click", function(){
+        const form = $(this).closest("form");
+        form.submit();
+
+    });
+
 });
 
 

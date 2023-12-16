@@ -43,7 +43,7 @@
     <div class="container-fluid row">
       <div class="col-sm-8 col-12 ms-sm-4 ms-3 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
         <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="MDB Logo" loading="lazy" />
-        <a id="petra-eats" class="ms-2 nav-link" href="#">PetraEats</a>
+        <a id="petra-eats" class="ms-2 nav-link" href="/">PetraEats</a>
       </div>
 
       <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
@@ -79,9 +79,14 @@
         @if(auth()->user()->status_user == 1)
         <!-- Direction User Mahasiswa -->
         <div class="col-xl-6 custom-margin d-flex flex-sm-row flex-column">
-          <a href="#" class="before ">Home<span class="ms-3 me-3">></span></a>
-          <a href="#" class="before">Kantin P<span class="ms-3 me-3">></span></a>
-          <div class="current">Carnival</div>
+          <a href="/mahasiswa" class="before">Home<span class="ms-3 me-3">></span></a>
+          <form action="{{ route('toCanteen') }}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="canteenID" value="{{ $menus[0]->kantin_id }}">
+            <a class="before" id="backToCanteen">{{ $menus[0]->nama_kantin }}<span class=" ms-3 me-3">></span></a>
+          </form>
+
+          <div class="current">{{ $menus[0]->nama_toko }}</div>
         </div>
         <!-- Direction User Mahasiswa -->
         @endif
@@ -167,7 +172,7 @@
           <div class="card-img-top">
             <div class="row" style="min-height: 12rem;">
               <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/kentang.jpeg') }}" alt="kentang goyeng">
+                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/'.$menu->picture) }}" alt="kentang goyeng">
               </div>
               <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
                 <div class="content" data-content="{{ $menu->menu_id }}">

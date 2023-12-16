@@ -27,6 +27,7 @@ return new class extends Migration
             $table->primary('email');
         });
         Schema::create('pe_toko', function (Blueprint $table) {
+            $table->string('picture');
             $table->string('toko_id');
             $table->string('nama_toko');
             $table->unsignedBigInteger('kantin_id');
@@ -36,6 +37,7 @@ return new class extends Migration
             $table->foreign('toko_id')->references('email')->on('users')->onDelete('cascade');
         });
         Schema::create('pe_menu', function (Blueprint $table) {
+            $table->string('picture');
             $table->unsignedBigInteger('menu_id')->autoIncrement();
             $table->string('nama_menu');
             $table->string('deskripsi');
@@ -45,7 +47,6 @@ return new class extends Migration
             $table->foreign('toko_id')->references('toko_id')->on('pe_toko')->onDelete('cascade');
             $table->foreign('kantin_id')->references('kantin_id')->on('pe_kantin')->onDelete('cascade');
         });
-
         Schema::create('pe_order', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id')->autoIncrement();
             $table->dateTime('tanggal');

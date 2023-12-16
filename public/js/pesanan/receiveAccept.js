@@ -20,9 +20,6 @@ $(document).ready(function(){
         status.css("background-color", "var(--deny-color)");
         status.text("Ditolak");
        }
-
-
-
     });
 
 

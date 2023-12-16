@@ -117,4 +117,13 @@ class orderPesananController extends Controller
 
         return response()->json(['status' => 'success']);
     }
+
+    public function getToko($tokoID)
+    {
+        $status = DB::table('pe_toko')
+            ->where('pe_toko.toko_id', '=', $tokoID)
+            ->select('pe_toko.tutup')
+            ->get();
+        return response()->json($status);
+    }
 }

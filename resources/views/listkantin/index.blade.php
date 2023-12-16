@@ -71,18 +71,23 @@
 
     <!-- Start Toko -->
     <div class="media-scroller snaps-inline">
-        <div class="scroll-arrow left-arrow bi-3x ms-3" onclick="scrollMediaScroller('left')">
+        <div class="scroll-arrow left-arrow bi-3x ms-3 z-3" onclick="scrollMediaScroller('left')">
             <i class="bi bi-arrow-left-circle-fill"></i>
         </div>
-        <div class="scroll-arrow right-arrow bi-3x me-3" onclick="scrollMediaScroller('right')">
+        <div class="scroll-arrow right-arrow bi-3x me-3 z-3" onclick="scrollMediaScroller('right')">
             <i class="bi bi-arrow-right-circle-fill"></i>
         </div>
 
         @foreach( $canteens as $canteen)
-        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post">
+
+        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal">
             {{ csrf_field() }}
             <input type="hidden" value="{{ $canteen->toko_id }}" name="tokoID">
-            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" alt="">
+            @if( $canteen->tutup == 1)
+            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" alt="">
+            @else
+            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" style="filter : grayscale(100%); pointer-events : none" alt="">
+            @endif
             <p class="title">{{ $canteen->nama_toko }}</p>
         </form>
         @endforeach
@@ -126,8 +131,12 @@
 
 
     <!-- Script -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
 
     <script>
+        const user = '{{ auth()->user()->email }}';
+
         function scrollMediaScroller(direction) {
             const container = document.querySelector('.media-scroller');
             const scrollAmount = 300; // Adjust this value based on your preference
@@ -139,7 +148,6 @@
             }
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src=" {{ asset('js/listKantin/script.js') }} "> </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

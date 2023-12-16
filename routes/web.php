@@ -65,6 +65,7 @@ Route::middleware('LoggedIn')->group(function () {
 });
 
 Route::get('/getOrder/{orderID}', [DetailOrderController::class, "getOrder"])->middleware("APIBlocker");
+Route::get('/getToko/{tokoID}', [orderPesananController::class, "getToko"])->middleware("APIBlocker");
 
 /*
 To do :

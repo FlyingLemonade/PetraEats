@@ -44,7 +44,6 @@ $(document).ready(function () {
                     return item.email_user;
                 });
                 
-                console.log("MSG SENT")
                 socket.emit("pesanTerima", {
                     order_id: noteContent,
                     statusTerima: status,

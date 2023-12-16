@@ -1,6 +1,12 @@
 $(document).ready(function () {
+    const socket = io("http://localhost:3000", {
+        query: {
+            email: user,
+        },
+    });
     //Script user mahasiswa
     let shoppingCart = [];
+
 
     function hasExistingRows() {
         // Check if there are any rows in the table with id 'listPesanan'
@@ -21,7 +27,7 @@ $(document).ready(function () {
             namaKantinElement.text("");
         } else {
             const namaKantinElement = $('#namaKantin');
-            namaKantinElement.text("TAMBAHKAN SESUATU TERLEBIH DAHULU!!!");
+            namaKantinElement.text("Kosong");
         }
     }
 
@@ -285,6 +291,7 @@ $(document).ready(function () {
     $('.tutup, .buka').on('click', function(e) {
         const tambahMenuButton = $('.btn-tambah');
         const value = $(this).attr("data-content");
+       
         const url = "order/status/";
         e.preventDefault();
         if (value == 1) {
@@ -294,10 +301,10 @@ $(document).ready(function () {
             // Hide delete and edit buttons when closed
             $('.delButton, .editButton').hide();
             tambahMenuButton.prop('disabled', true);
-            console.log(value);
+            
 
         } else {
-            console.log(value);
+        
             $(this).removeClass('buka').addClass('tutup').text('TUTUP');
             $(this).removeClass('btn-success').addClass('btn-danger');
             $(this).attr("data-content","1")
@@ -307,8 +314,8 @@ $(document).ready(function () {
             tambahMenuButton.prop('disabled', false);
         }
     
-        // Submit
-    
+      
+        console.log(user, " ",value);
         $.ajax({
             url: url,
             method: "POST",
@@ -320,13 +327,20 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Sent");
-
+                  // Submit
+                socket.emit("pesanBukaTutup", {
+                    sender: user,
+                    statusTutup: value,
+                });
+                
             },
             error: function (error) {
                 console.error("Error fetching data:", error);
             },
         });
     });
+
+
 
     // Add a check before opening the modal
     $('.btn-tambah').on('click', function(e) {

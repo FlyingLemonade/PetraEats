@@ -60,9 +60,13 @@
 
         @if(auth()->user()->status_user == 2)
         <!-- Kantin -->
-        <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center me-3">
-          <button class="logout btn btn-light border border-dark" onclick="logout()">Logout</button>
-          <h5 class="mt-2 ms-3">{{ auth()->user()->nama }}</h5>
+        <div class="col-12 d-flex justify-content-md-start justify-content-center me-md-3 row">
+          <div class="col-md-6 col-12 d-flex align-items-center justify-content-center">
+            <a class="logout btn btn-light border border-dark ms-4" href="/logout">Logout</a>
+          </div>
+          <div class="col-md-6 col-12 d-flex align-items-center justify-content-center">
+            <h5 class="mt-md-2 ms-4">{{ auth()->user()->nama }}</h5>
+          </div>
         </div>
         <!-- Kantin -->
         @endif
@@ -111,6 +115,7 @@
 
           <div class="status-button">
             @if($status[0]->tutup == 0)
+
             <button class='ms-3 btn btn-danger border border-dark tutup col-11' data-content="1">TUTUP</button>
             @endif
             @if($status[0]->tutup == 1)
@@ -319,28 +324,14 @@
 
 
   <!-- Script -->
+
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
 
   <script>
-    function logout() {
-      fetch('/logout', {
-          method: 'GET',
-          headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-          },
-        })
-        .then(response => {
-          if (response.ok) {
-            window.location.href = '/';
-          } else {
-            console.error('Logout failed');
-          }
-        })
-        .catch(error => {
-          console.error('Logout error', error);
-        });
-    }
+    const user = '{{ auth()->user()->email }}';
   </script>
+
   <script src="{{ asset('js/order/script.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

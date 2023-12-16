@@ -95,7 +95,7 @@
             <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $customer->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                  <img src="{{ asset('assets/mahasiswa/profile'. $customer->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->
@@ -140,7 +140,7 @@
             <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $order->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                  <img src="{{ asset('assets/kantin/toko/'. $order->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->

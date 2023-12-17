@@ -10,6 +10,7 @@ use App\Http\Controllers\pesananMahasiswaController;
 use App\Http\Controllers\notaPesananController;
 use App\Http\Controllers\orderPesananController;
 use App\Http\Controllers\homeControllerKantin;
+use App\Http\Controllers\riwayatController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Gate;
 /*
@@ -32,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Kantin
         Route::group(['prefix' => '/kantin', 'middleware' => 'can:kantin'], function () {
             Route::get('/pesanan', [pesananKantinController::class, 'index']);
+            Route::get("/riwayat", [riwayatController::class, "riwayatKantin"]);
             Route::group(['prefix' => '/order'], function () {
                 Route::get('/', [orderPesananController::class, 'index']);
                 Route::group(['middleware' => 'BlockGetMethod'], function () {
@@ -48,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Mahasiswa
         Route::group(['prefix' => '/mahasiswa', 'middleware' => 'can:mahasiswa'], function () {
             Route::get('/', [homeController::class, 'index']);
+           Route::get("/riwayat", [riwayatController::class, "riwayatMahasiswa"]);
             Route::get('/pesanan', [pesananMahasiswaController::class, 'index']);
             Route::post('/listKantin', [listKantinController::class, 'index'])->name('toCanteen');
             Route::group(['prefix' => '/order'], function () {

@@ -48,7 +48,6 @@
 
       <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
         @if(auth()->user()->status_user == 1)
-        <!-- Mahasiswa -->
         <i class="mt-2 fa-solid fa-cart-shopping btn position-relative d-flex justify-content-center align-items-center" id="shopCart" style="background-color:#2F4858; color: white;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
           <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             0
@@ -111,11 +110,8 @@
           @if($status[0]->tutup == 1)
           <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal' disabled>Tambah Menu</button>
           @endif
-
-
           <div class="status-button">
             @if($status[0]->tutup == 0)
-
             <button class='ms-3 btn btn-danger border border-dark tutup col-11' data-content="1">TUTUP</button>
             @endif
             @if($status[0]->tutup == 1)
@@ -157,14 +153,12 @@
             <span id="totalHarga">Rp 0</span>
           </div>
           <div class="col">
-
             <button type="button" id="submit-btn" class="btn" style="align-items: center; background-color: #2F4858; color: white;">Konfirmasi Pesanan</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <form id="sendData" method="POST" action="/mahasiswa/order/notaPesanan
   ">
     {{ csrf_field() }}
@@ -266,6 +260,7 @@
         </div>
         <div class="modal-body">
           <form id="editUser">
+            {{ csrf_field() }}
             <div class="mb-4">
               <input type="hidden" id="dataContentHidden" value="">
               <label class="col-form-label">Nama Menu</label>
@@ -277,7 +272,7 @@
             </div>
             <div class="mb-3">
               <label class="col-form-label">Harga Menu</label>
-              <input type="number" required class="form-control" id="hargaEdit" name="hargaEdit"></input>
+              <input type="number" class="form-control" id="hargaEdit" name="hargaEdit"></input>
             </div>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back</button>
             <button type="submit" id="editMenu" class="btn btn-primary">Edit Menu</button>
@@ -330,7 +325,6 @@
 
 
   <!-- Script -->
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
 

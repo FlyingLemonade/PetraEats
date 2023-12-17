@@ -79,7 +79,6 @@
         </div>
 
         @foreach( $canteens as $canteen)
-
         <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal" style="cursor : pointer">
 
             {{ csrf_field() }}

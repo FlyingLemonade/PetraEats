@@ -770,6 +770,7 @@ class MenuSeeder extends Seeder
             'harga' => 13000,
             'toko_id' => 'chattime@gmail.com',
             'kantin_id' => 1,
+
         ],
         [
             'picture' => 'chattime15.jpg',

@@ -15,7 +15,6 @@
             height: 100%;
             overflow: hidden;
         }
-
         @media (max-width: 480px) {
             .mycontainer {
                 display: flex;

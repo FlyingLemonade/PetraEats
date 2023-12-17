@@ -45,23 +45,22 @@ io.on("connection", function (socket) {
     function findSocketByEmail(email) {
         return connectedSockets.find((socket) => socket.user.email === email);
     }
-     // Pesan Buka atau Tutup Toko
-     socket.on("pesanBukaTutup", ({sender,statusTutup}) => {
+    // Pesan Buka atau Tutup Toko
+    socket.on("pesanBukaTutup", ({ sender, statusTutup }) => {
         console.log(sender + " " + statusTutup);
-    
+
         // Masukan Ke Data Database
         // const query =
         //     "UPDATE pe_toko SET tutup = ? WHERE toko_id = ?";
-        
+
         // connection.query(query, [statusTutup, sender]);
 
         // Kalo Receiver Online kirim ke Receiver
-        
-            socket.broadcast.emit("pesanBukaTutupServer", {
-                sender,
-                statusTutup,
-            });
-        
+
+        socket.broadcast.emit("pesanBukaTutupServer", {
+            sender,
+            statusTutup,
+        });
     });
     socket.on("pesanTerima", ({ order_id, statusTerima, userTujuan }) => {
         console.log(statusTerima + " " + userTujuan);
@@ -79,8 +78,8 @@ io.on("connection", function (socket) {
         }
 
         connection.query(query, [num, order_id]);
-
-        // Kalo Receiver Online kirim ke Receiver
+    
+        // Kalo Receiver Online kirim ke Receiver   
         if (targetSocket) {
             console.log(statusTerima);
             targetSocket.socket.emit("pesanTerimaServer", {
@@ -90,8 +89,78 @@ io.on("connection", function (socket) {
         }
     });
 
-   
+    socket.on(
+        "kirimOrder",
+        ({ pemesan, pemilikToko, shoppingCart, totalHarga, deskripsi }) => {
+            console.log(
+                "================================================\n" +
+                    pemesan +
+                    "\n" +
+                    shoppingCart +
+                    "\n" +
+                    pemilikToko +
+                    "\n" +
+                    "================================================\n"
+            );
 
+            const dataOrder = JSON.parse(shoppingCart);
+            const targetSocket = findSocketByEmail(pemilikToko);
+            
+            const query =
+                "INSERT INTO pe_order(status_pesanan,nominal,deskripsi,email_user,email_toko) VALUES (1,?,?,?,?)";
+            connection.query(
+                query,
+                [totalHarga, deskripsi, pemesan, pemilikToko],
+                (error, results, fields) => {
+                    if (error) {
+                        console.error(error.message);
+                    } else {
+                        //Ambil order tadi IDnya brp
+                        const lastOrderId = results.insertId;
+
+                        //Masukin detail order ke sini
+
+                        dataOrder.forEach((detailOrder) => {
+                            const insertDetailQuery =
+                                "INSERT INTO pe_detail_order VALUES (?, ?, ?, ?)";
+                            connection.query(
+                                insertDetailQuery,
+                                [
+                                    lastOrderId,
+                                    detailOrder["idMenu"],
+                                    detailOrder["quantity"],
+                                    parseInt(
+                                        detailOrder["quantity"] *
+                                            detailOrder["harga"]
+                                    ),
+                                ],
+                                (error2, results2, fields2) => {
+                                    if (error2) {
+                                        console.error(error2.message);
+                                    } else {
+                                        console.log(
+                                            "Row inserted successfully into pe_detail_order"
+                                        );
+                                    }
+                                }
+                            );
+                        });
+
+                        if (targetSocket) {
+                            console.log("Emitting kirimOrderServer to target socket:", lastOrderId);
+                            targetSocket.socket.emit("kirimOrderServer", {
+                                pemesan,
+                                lastOrderId,
+                            });
+                        }
+
+                    }
+                }
+            );
+            
+            
+        }
+    );
 
     // User Disconect
     socket.on("disconnect", function () {

@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isLogin'  => \App\Http\Middleware\isLogin::class,
         'LoggedIn' => \App\Http\Middleware\LoggedIn::class,
-        'APIBlocker' => \App\Http\Middleware\APIBlocker::class
+        'APIBlocker' => \App\Http\Middleware\APIBlocker::class,
+        'BlockGetMethod' => \App\Http\Middleware\BlockGetMethod::class
     ];
 }

@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    $(".card-body").on("click", function () {
+    $("body").on("click", ".card-body", function () {
         const noteContent = $(this).attr("data-content");
         const apiRequest = '/getOrder/'+ noteContent;
-
+        console.log(apiRequest);
         $.ajax({
             url: apiRequest,
             method: 'GET',

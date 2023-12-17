@@ -81,6 +81,7 @@
         @foreach( $canteens as $canteen)
 
         <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal" style="cursor : pointer">
+
             {{ csrf_field() }}
             <input type="hidden" value="{{ $canteen->toko_id }}" name="tokoID">
             @if( $canteen->tutup == 1)

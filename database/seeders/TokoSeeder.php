@@ -50,6 +50,48 @@ class TokoSeeder extends Seeder
                 'nama_toko' => 'Soto Ayam Jago',
                 'tutup' => 0,
                 'kantin_id' => 3,
+            ], [
+                'picture' => 'kantinP7.jpg',
+                'toko_id' => 'ndokee@gmail.com',
+                'nama_toko' => 'Ndokee',
+                'tutup' => 0,
+                'kantin_id' => 3,
+            ], [
+                'picture' => 'kantinW1.jpg',
+                'toko_id' => 'kedaihong@gmail.com',
+                'nama_toko' => 'Kedai Hong',
+                'tutup' => 0,
+                'kantin_id' => 1,
+            ], [
+                'picture' => 'kantinW2.jpg',
+                'toko_id' => 'depotmie55@gmail.com',
+                'nama_toko' => 'Depot Mie 55',
+                'tutup' => 0,
+                'kantin_id' => 1,
+            ], [
+                'picture' => 'kantinW3.jpg',
+                'toko_id' => 'ayampinarak@gmail.com',
+                'nama_toko' => 'Ayam Pinarak',
+                'tutup' => 0,
+                'kantin_id' => 1,
+            ], [
+                'picture' => 'kantinW4.png',
+                'toko_id' => 'pokpok@gmail.com',
+                'nama_toko' => 'Pokpok',
+                'tutup' => 0,
+                'kantin_id' => 1,
+            ], [
+                'picture' => 'kantinW5.jpg',
+                'toko_id' => 'chattime@gmail.com',
+                'nama_toko' => 'Chattime',
+                'tutup' => 0,
+                'kantin_id' => 1,
+            ], [
+                'picture' => 'kantinW6.png',
+                'toko_id' => 'starbucks@gmail.com',
+                'nama_toko' => 'Starbucks',
+                'tutup' => 0,
+                'kantin_id' => 1,
             ]
         ];
 

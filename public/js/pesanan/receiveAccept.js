@@ -6,7 +6,7 @@ $(document).ready(function () {
     });
 
     socket.on("pesanTerimaServer", ({statusTerima,order_id}) => {
-       
+ 
         const status = $("#card-"+ order_id).find("#status");
         
         if(statusTerima == "terima"){

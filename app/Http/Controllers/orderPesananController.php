@@ -56,7 +56,7 @@ class orderPesananController extends Controller
         $deskripsi = $request->input('deskripsiBaru');
         $harga = $request->input('hargaBaru');
         $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
-
+      
         // Insert data into the pe_menu table
         $menuId = DB::table('pe_menu')->insertGetId([
             'nama_menu' => $namaMenu,

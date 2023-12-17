@@ -7,6 +7,7 @@ $(document).ready(function () {
     //Script user mahasiswa
     let shoppingCart = [];
 
+
     function hasExistingRows() {
         // Check if there are any rows in the table with id 'listPesanan'
         const rowCount = $("#listPesanan tr").length;

@@ -157,6 +157,7 @@
             <span id="totalHarga">Rp 0</span>
           </div>
           <div class="col">
+
             <button type="button" id="submit-btn" class="btn" style="align-items: center; background-color: #2F4858; color: white;">Konfirmasi Pesanan</button>
           </div>
         </div>
@@ -171,7 +172,6 @@
   </form>
   <!-- shopping cart offcanvas user mahasiswa -->
   @endif
-
 
   <!-- List Menu -->
   <div class="container-fluid">
@@ -337,7 +337,6 @@
   <script>
     const user = '{{ auth()->user()->email }}';
   </script>
-
   @if( auth()->user()->status_user == 1)
   <script>
     const id_toko = '{{ $menus[0]->toko_id }}';

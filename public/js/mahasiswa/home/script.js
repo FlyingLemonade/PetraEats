@@ -44,5 +44,9 @@
                 const form = $(this).closest('form');
                 form.submit();
             })
-            
+
+            $(".image-small").on("click", function(){
+                const form = $(this).closest('form');
+                form.submit();
+            })
         });

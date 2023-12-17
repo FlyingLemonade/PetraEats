@@ -36,17 +36,12 @@
       <div class="col-sm-2 col-12 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
         <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="PE Logo" loading="lazy" />
         <span id="petra-eats">
-          @if(auth()->user()->status_user == 1)
-          <a class="nav-link" href="/mahasiswa">PetraEats</a>
-          @endif
-          @if(auth()->user()->status_user == 2)
-          <a class="nav-link" href="order">PetraEats</a>
-          @endif
+          <a class="nav-link" href="/">PetraEats</a>
         </span>
       </div>
       <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
         <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
-        <button id="check" class="btn btn-primary">check</button>
+
       </div>
     </div>
   </nav>
@@ -58,13 +53,7 @@
       <div class="row">
         <div class="col-6 ms-5">
           <div class="row d-flex justify-content-start custom-margin">
-            @if(auth()->user()->status_user == 1)
-            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="/mahasiswa">Home<span class="ms-3">></span></a>
-            @endif
-            @if(auth()->user()->status_user == 2)
-            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="order">Home<span class="ms-3">></span></a>
-            @endif
-
+            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="/">Home<span class="ms-3">></span></a>
             <div class=" col-sm-8 current ms-lg-1">Pesanan</div>
           </div>
         </div>

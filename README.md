@@ -10,10 +10,29 @@
     <li>Do "php artisan migrate" to create the database tables</li>
     <li>Do "php artisan db:seed" to fill teh tables</li>
     <li>The setup is done</li>
-
+    
 </ol>
 
+## Midtrans
 
+<ul>
+<li>MIDTRANS_MERCHANT_ID</li>
+<li>MIDTRANS_CLIENT_KEY</li>
+<li>MIDTRANS_SERVER_KEY</li>
+</ul>
+<ol>
+    <li>Create new config</li>
+    <li>Put this inside
+    "<?php
+    return [
+    'merchant_id' => env("MIDTRANS_MERCHANT_ID"),
+    'client_key' => env("MIDTRANS_CLIENT_KEY"),
+    'server_key' => env("MIDTRANS_SERVER_KEY"),
+    ];"
+</li>
+    
+</ol>
+<p>QRIS Simulator :"https://simulator.sandbox.midtrans.com/qris/index"</p>
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

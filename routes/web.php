@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Mahasiswa
         Route::group(['prefix' => '/mahasiswa', 'middleware' => 'can:mahasiswa'], function () {
             Route::get('/', [homeController::class, 'index']);
-           Route::get("/riwayat", [riwayatController::class, "riwayatMahasiswa"]);
+            Route::get("/riwayat", [riwayatController::class, "riwayatMahasiswa"]);
             Route::get('/pesanan', [pesananMahasiswaController::class, 'index']);
             Route::post('/listKantin', [listKantinController::class, 'index'])->name('toCanteen');
             Route::group(['prefix' => '/order'], function () {

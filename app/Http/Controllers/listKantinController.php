@@ -28,4 +28,5 @@ class listKantinController extends Controller
             ->get();
 
         return view("listkantin.index")->with(["canteens" => $data, "recommends" => $recommends, "location" => $canteen]);
+    }
 }

@@ -7,17 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class orderPesananController extends Controller
 {
-    public function toOrder(Request $request)
-    {
-        $tokoID = $request->input('tokoID');
-        $menus = DB::table('pe_menu')
-            ->leftJoin('pe_toko', 'pe_menu.toko_id', '=', 'pe_toko.toko_id')
-            ->leftJoin('pe_kantin', 'pe_toko.kantin_id', '=', 'pe_kantin.kantin_id') // Add this line
-            ->where('pe_menu.toko_id', '=', $tokoID)
-            ->select('pe_menu.*', 'pe_toko.kantin_id', 'pe_toko.nama_toko', 'pe_kantin.nama_kantin') // Include the 'pe_kantin.nama_kantin' column
-            ->get();
-        return view("order.index", compact('menus'));
-    }
 
     public function index(Request $request)
     {
@@ -49,36 +38,7 @@ class orderPesananController extends Controller
 
         return redirect()->route('notaPesanan');
     }
-    public function addMenu(Request $request)
-    {
 
-        $request->validate([
-            'namaMenuBaru' => 'required',
-            'deskripsiBaru' => 'required',
-            'hargaBaru' => 'required|numeric',
-            'fotoMenuBaru' => 'required'
-        ]);
-
-        // Retrieve the form data
-        $namaMenu = $request->input('namaMenuBaru');
-        $deskripsi = $request->input('deskripsiBaru');
-        $harga = $request->input('hargaBaru');
-        $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
-      
-        // Insert data into the pe_menu table
-        $menuId = DB::table('pe_menu')->insertGetId([
-            'nama_menu' => $namaMenu,
-            'deskripsi' => $deskripsi,
-            'harga' => $harga,
-            'toko_id' => auth()->user()->email,
-            'kantin_id' => $kantinId,
-        ]);
-
-        if ($menuId) {
-            // If the insertion is successful
-            return redirect('kantin/order');
-        }
-    }
     public function toOrder(Request $request)
     {
         $tokoID = $request->input('tokoID');
@@ -91,23 +51,7 @@ class orderPesananController extends Controller
 
         return view('order.index', compact('menus'));
     }
-    public function updateStatus(Request $request)
-    {
-        $status = $request->input('value');
-        $affected = DB::table('pe_toko')
-            ->where('pe_toko.toko_id', '=', auth()->user()->email)
-            ->update(['tutup' => $status]);
-        return response()->json(['status' => 'success']);
-    }
 
-    public function deleteMenu(Request $request)
-    {
-        $menu_id = $request->input('menu_id');
-
-        DB::table('pe_menu')->where('menu_id', $menu_id)->delete();
-
-        return response()->json(['status' => 'success']);
-    }
     public function addMenu(Request $request)
     {
         // Retrieve the form data
@@ -145,7 +89,7 @@ class orderPesananController extends Controller
         $menu_id = $request->input('menu_id');
 
         DB::table('pe_menu')->where('menu_id', $menu_id)->delete();
-        
+
         return response()->json(['status' => 'success']);
     }
 
@@ -162,7 +106,7 @@ class orderPesananController extends Controller
             'deskripsi' => $deskripsi,
             'harga' => $harga,
         ]);
-      
+
         return response()->json(['status' => 'success']);
     }
 }

@@ -1,6 +1,12 @@
 $(document).ready(function () {
+    const socket = io("http://localhost:3000", {
+        query: {
+            email: user,
+        },
+    });
     //Script user mahasiswa
     let shoppingCart = [];
+
 
     function hasExistingRows() {
         // Check if there are any rows in the table with id 'listPesanan'
@@ -21,7 +27,7 @@ $(document).ready(function () {
             namaKantinElement.text("");
         } else {
             const namaKantinElement = $('#namaKantin');
-            namaKantinElement.text("TAMBAHKAN SESUATU TERLEBIH DAHULU!!!");
+            namaKantinElement.text("Kosong");
         }
     }
 
@@ -46,6 +52,7 @@ $(document).ready(function () {
         const plusButton = toShow.find("#plusButton");
 
         //get data
+        const idMenu = $(this).closest('.card').find('.content').attr('data-content');
         const namaMenuText = $(this).closest('.card').find('#nama_menu').text();
         const fotoMenuSrc = $(this).closest('.card').find('.fotoMenu').attr('src');
         const hargaText = $(this).closest('.card').find('#harga').text();
@@ -55,13 +62,16 @@ $(document).ready(function () {
 
         //Tambah item ke cart
         const item = {
+            idMenu : idMenu,
             namaMenu: namaMenuText,
             harga: harga,
             fotoMenu: fotoMenuSrc,
-            quantity: 1
+            quantity: 1,
+            totalPrice : harga,
         };
+     
         shoppingCart.push(item);
-
+console.log(shoppingCart);
         //Buat list table di offcanvas
         $("#listPesanan").append(
             `<tr>
@@ -113,7 +123,7 @@ $(document).ready(function () {
             const totalPrice = pricePerItem * quantity;
             rowElement.find('.quantity-value').text(quantity);
             rowElement.find('.harga').text(totalPrice);
-
+            
             // Update the total price of the shoppingCart array
             const menuItem = shoppingCart.find(item => item.namaMenu === menuName);
             if (menuItem) {
@@ -131,9 +141,13 @@ $(document).ready(function () {
 
         // Find the menu item in the shoppingCart array
         const menuName = $(this).closest('.card').find('#nama_menu').text();
+        const id = $(this).find('.content').attr('data-content');
         const menuItem = shoppingCart.find(item => item.namaMenu === menuName);
 
         const operation = $(this).attr("id");
+        
+        const index = shoppingCart.indexOf(id);
+       
 
         if (operation == "minusButton") {
             const res = counter.text() - 1;
@@ -212,7 +226,8 @@ $(document).ready(function () {
         //cari nama menu yang di klik minus
         const namaMenuText = $(this).closest('tr').find('.col-4').text().trim();
         const index = shoppingCart.findIndex(item => item.namaMenu === namaMenuText);
-
+    
+       
         const operasi = $(this).hasClass('btnMin') ? '-' : '+';
         if (operasi === "-" && quantity > 0) {
             // quantity dalam table di min
@@ -230,6 +245,7 @@ $(document).ready(function () {
         
         quantityElement.text(quantity);
         hargaElement.text(harga);
+        
 
         //update notif logo cart
         updateCartNotification();
@@ -247,7 +263,7 @@ $(document).ready(function () {
             const namaKantinElement = $('#namaKantin');
             if (!hasExistingRows()) {
                 // The table doesn't have any rows
-                namaKantinElement.text('TAMBAHKAN SESUATU TERLEBIH DAHULU!!!');
+                namaKantinElement.text('Kosong');
                 $("#totalHarga").text("Rp 0");
             }
 
@@ -294,10 +310,7 @@ $(document).ready(function () {
             // Hide delete and edit buttons when closed
             $('.delButton, .editButton').hide();
             tambahMenuButton.prop('disabled', true);
-            console.log(value);
-
         } else {
-            console.log(value);
             $(this).removeClass('buka').addClass('tutup').text('TUTUP');
             $(this).removeClass('btn-success').addClass('btn-danger');
             $(this).attr("data-content","1")
@@ -306,9 +319,8 @@ $(document).ready(function () {
             // Disable the "Tambah Menu" button
             tambahMenuButton.prop('disabled', false);
         }
-    
-        // Submit
-    
+      
+        console.log(user, " ",value);
         $.ajax({
             url: url,
             method: "POST",
@@ -320,13 +332,19 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Sent");
-
+                  // Submit
+                socket.emit("pesanBukaTutup", {
+                    sender: user,
+                    statusTutup: value,
+                });     
             },
             error: function (error) {
                 console.error("Error fetching data:", error);
             },
         });
     });
+
+
 
     // Add a check before opening the modal
     $('.btn-tambah').on('click', function(e) {
@@ -441,7 +459,6 @@ $(document).ready(function () {
 
 
     $("#tambahMenu").on("click", function () {
-        
         const menuBaru = $("#namaMenuBaru").val();
         const deskripsiBaru = $("#deskripsiBaru").val();
         const hargaBaru = $("#hargaBaru").val();
@@ -479,29 +496,25 @@ $(document).ready(function () {
     });
 
     $("#submit-btn").on("click", function () {
-        // Ambil Data dari Cart
-    
-        shoppingCart.forEach((element) => {
-            console.log(element.namaMenu);
+        let total = 0;
+        $(".harga").each(function () {
+            const harga = parseInt($(this).text());
+            total += harga;
         });
-    
-        // Submit
-    
-        $.ajax({
-            url: "order/nota",
-            method: "POST",
-            contentType: "application/json",
-            data: shoppingCart,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function () {
-                window.location.href = "order/notaPesanan";
-            },
-            error: function (error) {
-                console.error("Error fetching data:", error);
-            },
-        });
+        console.log(total);
+        const data = {
+            shoppingCart : shoppingCart,
+            totalHarga : total,
+            idToko : id_toko
+        };
+        $("[name=sendOBJ]").val(JSON.stringify(data));
+        $("#sendData").submit();
+    });
+
+    $("#backToCanteen").on("click", function(){
+        const form = $(this).closest("form");
+        form.submit();
+
     });
 
 });

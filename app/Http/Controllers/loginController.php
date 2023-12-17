@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -42,7 +40,11 @@ class LoginController extends Controller
                 return redirect("mahasiswa/");
             } else if ($user->status_user == 2) {
 
-                return redirect("kantin/order");
+                $dataToko = DB::table('pe_toko')
+                    ->where('pe_toko.toko_id', '=', auth()->user()->email)
+                    ->select('pe_toko.*')
+                    ->get();
+                return redirect("kantin/order")->with(['status' => $dataToko]);
             }
         }
 

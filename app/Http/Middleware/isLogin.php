@@ -21,6 +21,7 @@ class isLogin
     public function handle(Request $request, Closure $next): Response
     {
 
+
         if (!in_array(auth()->user()->status_user, [1, 2, 3])) {
             abort(403);
         }

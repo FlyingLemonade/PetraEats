@@ -15,8 +15,6 @@
             height: 100%;
             overflow: hidden;
         }
-
-
         @media (max-width: 480px) {
             .mycontainer {
                 display: flex;
@@ -171,8 +169,6 @@
                 <input type="hidden" name="canteenID" value="1">
                 <img type="submit" class="image" src="{{ asset('assets/kantin/KantinW.jpg') }}" alt="Kantin W">
             </form>
-
-
             <form id="divSplit" class="form" method="post" action="{{ route('toCanteen') }}">
                 {{ csrf_field() }}
                 <input type="hidden" name="canteenID" value="2">

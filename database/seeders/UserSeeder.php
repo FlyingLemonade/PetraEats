@@ -172,8 +172,6 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('starbucks'),
                 'status_user' => 2,
             ],
-
-            
         ];
 
         DB::table('users')->insert($users);

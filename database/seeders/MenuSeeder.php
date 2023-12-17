@@ -845,8 +845,6 @@ class MenuSeeder extends Seeder
             'kantin_id' => 3,
         ],
         
-
-        
     ];
         DB::table('pe_menu')->insert($foods);
     }

@@ -16,8 +16,14 @@
       @media (max-width: 2000px) {
         body,
         html {
-          height: 100%;
-          overflow: hidden;
+        height: 100%;
+        overflow: hidden;
+        }
+        @media (max-width: 480px) {
+            .mycontainer {
+                display: flex;
+                flex-direction: column;
+            }
         }
 
         .general {
@@ -125,7 +131,6 @@
         .general {
           display: none;
         }
-
         .mobile {
           display: block;
         }
@@ -144,7 +149,6 @@
           padding: 1em;
           width: auto;
         }
-
         .logo-container {
           display: flex;
           align-items: center;
@@ -173,7 +177,6 @@
         .carousel-item {
           padding: 0;
           max-height: 100%;
-
           max-width: 100%;
           object-fit: cover;
         }
@@ -215,7 +218,6 @@
           bottom: 0;
           width: 100%;
         }
-
         .carousel-item {
           text-align: center;
         }
@@ -373,3 +375,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
   </body>
 </html>
+

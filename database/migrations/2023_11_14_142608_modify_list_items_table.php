@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -49,7 +50,7 @@ return new class extends Migration
         });
         Schema::create('pe_order', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id')->autoIncrement();
-            $table->dateTime('tanggal');
+            $table->dateTime('tanggal')->default(DB::raw('CURRENT_TIMESTAMP'));
             // 1 untuk pesanan diterima, 2 pesanan diproses, 3 siap diambil
             $table->integer('status_pesanan');
             $table->double('nominal');

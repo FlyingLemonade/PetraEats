@@ -52,6 +52,7 @@ $(document).ready(function () {
         const plusButton = toShow.find("#plusButton");
 
         //get data
+        const idMenu = $(this).closest('.card').find('.content').attr('data-content');
         const namaMenuText = $(this).closest('.card').find('#nama_menu').text();
         const fotoMenuSrc = $(this).closest('.card').find('.fotoMenu').attr('src');
         const hargaText = $(this).closest('.card').find('#harga').text();
@@ -61,13 +62,16 @@ $(document).ready(function () {
 
         //Tambah item ke cart
         const item = {
+            idMenu : idMenu,
             namaMenu: namaMenuText,
             harga: harga,
             fotoMenu: fotoMenuSrc,
-            quantity: 1
+            quantity: 1,
+            totalPrice : harga,
         };
+     
         shoppingCart.push(item);
-
+console.log(shoppingCart);
         //Buat list table di offcanvas
         $("#listPesanan").append(
             `<tr>
@@ -119,7 +123,7 @@ $(document).ready(function () {
             const totalPrice = pricePerItem * quantity;
             rowElement.find('.quantity-value').text(quantity);
             rowElement.find('.harga').text(totalPrice);
-
+            
             // Update the total price of the shoppingCart array
             const menuItem = shoppingCart.find(item => item.namaMenu === menuName);
             if (menuItem) {
@@ -137,9 +141,13 @@ $(document).ready(function () {
 
         // Find the menu item in the shoppingCart array
         const menuName = $(this).closest('.card').find('#nama_menu').text();
+        const id = $(this).find('.content').attr('data-content');
         const menuItem = shoppingCart.find(item => item.namaMenu === menuName);
 
         const operation = $(this).attr("id");
+        
+        const index = shoppingCart.indexOf(id);
+       
 
         if (operation == "minusButton") {
             const res = counter.text() - 1;
@@ -218,7 +226,8 @@ $(document).ready(function () {
         //cari nama menu yang di klik minus
         const namaMenuText = $(this).closest('tr').find('.col-4').text().trim();
         const index = shoppingCart.findIndex(item => item.namaMenu === namaMenuText);
-
+    
+       
         const operasi = $(this).hasClass('btnMin') ? '-' : '+';
         if (operasi === "-" && quantity > 0) {
             // quantity dalam table di min
@@ -236,6 +245,7 @@ $(document).ready(function () {
         
         quantityElement.text(quantity);
         hargaElement.text(harga);
+        
 
         //update notif logo cart
         updateCartNotification();
@@ -253,7 +263,7 @@ $(document).ready(function () {
             const namaKantinElement = $('#namaKantin');
             if (!hasExistingRows()) {
                 // The table doesn't have any rows
-                namaKantinElement.text('TAMBAHKAN SESUATU TERLEBIH DAHULU!!!');
+                namaKantinElement.text('Kosong');
                 $("#totalHarga").text("Rp 0");
             }
 
@@ -291,7 +301,6 @@ $(document).ready(function () {
     $('.tutup, .buka').on('click', function(e) {
         const tambahMenuButton = $('.btn-tambah');
         const value = $(this).attr("data-content");
-       
         const url = "order/status/";
         e.preventDefault();
         if (value == 1) {
@@ -301,10 +310,7 @@ $(document).ready(function () {
             // Hide delete and edit buttons when closed
             $('.delButton, .editButton').hide();
             tambahMenuButton.prop('disabled', true);
-            
-
         } else {
-        
             $(this).removeClass('buka').addClass('tutup').text('TUTUP');
             $(this).removeClass('btn-success').addClass('btn-danger');
             $(this).attr("data-content","1")
@@ -313,7 +319,6 @@ $(document).ready(function () {
             // Disable the "Tambah Menu" button
             tambahMenuButton.prop('disabled', false);
         }
-    
       
         console.log(user, " ",value);
         $.ajax({
@@ -331,8 +336,7 @@ $(document).ready(function () {
                 socket.emit("pesanBukaTutup", {
                     sender: user,
                     statusTutup: value,
-                });
-                
+                });     
             },
             error: function (error) {
                 console.error("Error fetching data:", error);
@@ -378,19 +382,36 @@ $(document).ready(function () {
     });
 
     $("#editMenu").on("click", function () {
-        event.preventDefault();
-        
         const namaMenu = $("#namaMenuEdit").val();
-        const deskripsi = $("#deskripsiEdit").val();
-        const harga = $("#hargaEdit").val();
+        const deskripsiEdit = $("#deskripsiEdit").val();
+        const hargaEdit = $("#hargaEdit").val();
 
         // Get the data-content attribute from the hidden input
         const dataContent = $("#dataContentHidden").val();
 
-        // Update the values in the card based on data-content
-        $(".content[data-content='" + dataContent + "']").closest('.card').find('#nama_menu').text(namaMenu);
-        $(".content[data-content='" + dataContent + "']").closest('.card').find('#deskripsi').text(deskripsi);
-        $(".content[data-content='" + dataContent + "']").closest('.card').find('#harga').text("Rp " + harga);
+        $.ajax({
+            url: 'order/editMenu/',
+            type: 'POST',
+            data: {
+                'menu_id': dataContent,
+                'namaMenuEdit': namaMenu,
+                'deskripsiEdit': deskripsiEdit,
+                'hargaEdit': hargaEdit,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function () {
+                alert('Menu berhasil diedit');
+                window.location.href = "order";
+            
+            },
+            error: function (error) {
+                alert("Menu gagal diedit");
+                console.error("Error fetching data:", error);
+                window.location.href = "order";
+            }
+        });
 
 
         // Close the modal after editing
@@ -398,7 +419,7 @@ $(document).ready(function () {
     });
 
     $(".delButton").on("click", function () {
-        event.preventDefault();
+       
         const dataContent = $(this).closest('.card').find('.content').data('content');
         $("#dataContentHidden").val(dataContent);
 
@@ -411,114 +432,84 @@ $(document).ready(function () {
         // Get the data-content attribute from the hidden input
         const dataContent = $("#dataContentHidden").val();
 
-        $(".main-menu-item").filter(function() {
-            return $(this).find('.content').data('content') == dataContent;
-        }).remove();
+        // $(".main-menu-item").filter(function() {
+        //     return $(this).find('.content').data('content') == dataContent;
+        // }).remove();
+
+        $.ajax({
+            url: 'order/deleteMenu/',
+            type: 'POST',
+            data: {
+                'menu_id' : dataContent
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function () {
+                alert("Menu berhasil di delete");
+            },
+            error: function (error) {
+                alert("Menu gagal di delete");
+                console.error("Error fetching data:", error);
+            }
+        })
 
         $('#deleteMenuModal').modal('hide');
     });
 
 
     $("#tambahMenu").on("click", function () {
+        const menuBaru = $("#namaMenuBaru").val();
+        const deskripsiBaru = $("#deskripsiBaru").val();
+        const hargaBaru = $("#hargaBaru").val();
+
+        const fileInput = $("#fotoMenuBaru")[0]; // Get the file input element
+        const src = fileInput.files[0].name;
+        console.log(src);
+
         $.ajax({
-            url: 'kantin/order',
+            url: 'order/addMenu/',
             type: 'POST',
-            data: $('#tambahMenuForm').serialize(),
-            success: function () {
-                alert('Menu berhasil ditambah');
-                $('#tambahMenuModal').modal('hide');
-
-            }
-        });
-
-        // event.preventDefault();
-        // const menuBaru = $("#namaMenuBaru").val();
-        // const deskripsiBaru = $("#deskripsiBaru").val();
-        // const hargaBaru = $("#hargaBaru").val();
-
-        // const fileInput = $("#fotoMenuBaru")[0]; // Get the file input element
-        // const src = fileInput.files[0].name;
-
-        // console.log(menuBaru);
-        // console.log(deskripsiBaru);
-        // console.log(hargaBaru);
-        // console.log(src);
-
-        // const lastDataContent = $('#listMenu .main-menu-item:last .content').data('content');
-
-        // const newDataContent = lastDataContent + 1;
-        // console.log(newDataContent);
-
-        // $("#listMenu").append(`
-        // <div class="col-xl-4 col-lg-6 col-12 mb-4 main-menu-item">
-        //     <div class="card ">
-        //       <div class="card-img-top">
-        //         <div class="row" style="min-height: 12rem;">
-        //           <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-        //             <img class="fotoMenu rounded img-fluid" src="assets/`+ src +`" alt="">
-        //           </div>
-        //           <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
-        //             <div class="content" data-content="`+ newDataContent +`">
-        //             <h5 id="nama_menu">`+ menuBaru +`</h5>
-        //             <p id="deskripsi">`+ deskripsiBaru +`</p>
-        //             <p id="harga">Rp `+ hargaBaru + `</p>
-        //           </div>
-        //           </div>
-        //           <!-- Button User mahasiswa -->
-        //           <!-- <div class="col-2 text-end d-flex align-items-end justify-content-end">
-        //             <button type="button" class="btn addButton " style="background-color: #2F4858; color: white;">
-        //                 add</button>
-        //             <div class="custom-add d-flex align-items-center justify-content-end">
-        //                 <button id="minusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-minus"></i></button>
-        //                 <div id="counter" class="fw-bold ms-3 me-3 custom-add-btn counter">1</div>
-        //                 <button id="plusButton" class="btn custom-add-btn" style="background-color: #2F4858; color: white"><i class="fas fa-plus"></i></button>
-        //             </div>
-        //           </div> -->
-        //           <!-- Button User mahasiswa -->
-
-        //           <!-- Button User Kantin -->
-        //           <div class="col-2 text-end d-flex align-items-end justify-content-end">
-        //             <button type="button" class="btn delButton btn-danger me-4" data-bs-toggle='modal' data-bs-target='#deleteMenuModal'>Delete</button>
-        //             <button type="button" class="btn editButton" style="background-color: #2F4858; color: white;"
-        //               data-bs-toggle='modal' data-bs-target='#editMenuModal'>
-        //                 Edit</button>
-        //           </div>
-        //           <!-- Button User Kantin -->
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </div>`);
-
-
-        //$('#tambahMenuModal').modal('hide');
-    });
-
-    $("#submit-btn").on("click", function () {
-        // Ambil Data dari Cart
-    
-        shoppingCart.forEach((element) => {
-            console.log(element.namaMenu);
-        });
-    
-        // Submit
-    
-        $.ajax({
-            url: "order/nota",
-            method: "POST",
-            contentType: "application/json",
-            data: shoppingCart,
+            data: {
+                'namaMenuBaru': menuBaru,
+                'deskripsiBaru': deskripsiBaru,
+                'hargaBaru': hargaBaru,
+                'fotoMenuBaru': src
+            },
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function () {
-                window.location.href = "order/notaPesanan";
+                alert('Menu berhasil ditambah');
+                window.location.href = "order";
+            
             },
             error: function (error) {
+                alert("Menu gagal ditambah, data ada yang kosong");
                 console.error("Error fetching data:", error);
-            },
+                window.location.href = "order";
+            }
         });
+
+        $('#tambahMenuModal').modal('hide');
+
     });
 
+    $("#submit-btn").on("click", function () {
+        let total = 0;
+        $(".harga").each(function () {
+            const harga = parseInt($(this).text());
+            total += harga;
+        });
+        console.log(total);
+        const data = {
+            shoppingCart : shoppingCart,
+            totalHarga : total,
+            idToko : id_toko
+        };
+        $("[name=sendOBJ]").val(JSON.stringify(data));
+        $("#sendData").submit();
+    });
 
     $("#backToCanteen").on("click", function(){
         const form = $(this).closest("form");
@@ -529,6 +520,24 @@ $(document).ready(function () {
 });
 
 
+function toPesanan() {
+    fetch('/kantin/pesanan', {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/kantin/pesanan';
+            } else {
+                console.error('Fail to Move');
+            }
+        })
+        .catch(error => {
+            console.error('Error Occur', error);
+        });
+}
 
 
 

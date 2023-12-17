@@ -46,6 +46,7 @@
       </div>
       <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
         <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
+        <button id="check" class="btn btn-primary">check</button>
       </div>
     </div>
   </nav>
@@ -64,7 +65,7 @@
             <a class=" col-lg-2 col-md-3 col-sm-4 before" href="order">Home<span class="ms-3">></span></a>
             @endif
 
-            <div class=" col-sm-8 current ms-lg-1">Riwayat Pesanan</div>
+            <div class=" col-sm-8 current ms-lg-1">Pesanan</div>
           </div>
         </div>
       </div>
@@ -79,11 +80,16 @@
         <div class="col-md-4 col-6 align-items-center d-flex">
           <h5 class="ms-5">Pesanan</h5>
         </div>
-        <div class="col-md-7 col-5 d-flex justify-content-end me-3">
-          <button type="button" class="btn btn-warning fw-bold">Riwayat</button>
+        <div class="col-md-7 col-5 d-flex justify-content-end me-5">
+          @if(auth()->user()->status_user == 1)
+          <button onclick="toRiwayatMahasiswa()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
+          @endif
+          @if(auth()->user()->status_user == 2)
+          <button onclick="toRiwayatKantin()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
+          @endif
         </div>
       </div>
-      <div class="row custom-box">
+      <div class="row custom-box ms-5 me-5">
 
 
         @if(auth()->user()->status_user == 2)
@@ -220,7 +226,7 @@
   @if(auth()->user()->status_user == 1)>
   <script src=" {{ asset('js/pesanan/receiveAccept.js') }} "></script>
   @endif
-
+  <script src="{{ asset('js/pesanan/terimaPesanan.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 

@@ -48,8 +48,7 @@
 
       <div class="col-sm-3 col-12 d-flex justify-content-sm-end justify-content-center">
         @if(auth()->user()->status_user == 1)
-        <!-- Mahasiswa -->
-        <i class="mt-2 fa-solid fa-cart-shopping btn position-relative" id="shopCart" style="background-color:#2F4858; color: white;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        <i class="mt-2 fa-solid fa-cart-shopping btn position-relative d-flex justify-content-center align-items-center" id="shopCart" style="background-color:#2F4858; color: white;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
           <span id="notifCart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             0
           </span>
@@ -111,11 +110,8 @@
           @if($status[0]->tutup == 1)
           <button class='ms-3 btn btn-success border border-dark btn-tambah' data-bs-toggle='modal' data-bs-target='#tambahMenuModal' disabled>Tambah Menu</button>
           @endif
-
-
           <div class="status-button">
             @if($status[0]->tutup == 0)
-
             <button class='ms-3 btn btn-danger border border-dark tutup col-11' data-content="1">TUTUP</button>
             @endif
             @if($status[0]->tutup == 1)
@@ -139,7 +135,7 @@
     </div>
     <div class="offcanvas-body">
       <div class="container">
-        <h5 id="namaKantin">TAMBAHKAN SESUATU TERLEBIH DAHULU!!!</h5>
+        <h5 id="namaKantin">Kosong</h5>
       </div>
       <div class="container">
         <table class="table">
@@ -157,15 +153,19 @@
             <span id="totalHarga">Rp 0</span>
           </div>
           <div class="col">
-            <button type="button" class="btn" style="align-items: center; background-color: #2F4858; color: white;">Konrimasi Pesanan</button>
+            <button type="button" id="submit-btn" class="btn" style="align-items: center; background-color: #2F4858; color: white;">Konfirmasi Pesanan</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <form id="sendData" method="POST" action="/mahasiswa/order/notaPesanan
+  ">
+    {{ csrf_field() }}
+    <input type="hidden" name="sendOBJ" value="">
+  </form>
   <!-- shopping cart offcanvas user mahasiswa -->
   @endif
-
 
   <!-- List Menu -->
   <div class="container-fluid">
@@ -177,7 +177,7 @@
           <div class="card-img-top">
             <div class="row" style="min-height: 12rem;">
               <div class="col-lg-4 col-6 d-flex justify-content-center align-items-center">
-                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/'.$menu->picture) }}" alt="kentang goyeng">
+                <img class="fotoMenu rounded img-fluid" src="{{ asset('assets/foods/'.$menu->menu_picture) }}" alt="kentang goyeng">
               </div>
               <div class="col-lg-6 col-4 d-flex justify-content-center align-items-center mt-3">
                 <div class="content" data-content="{{ $menu->menu_id }}">
@@ -260,6 +260,7 @@
         </div>
         <div class="modal-body">
           <form id="editUser">
+            {{ csrf_field() }}
             <div class="mb-4">
               <input type="hidden" id="dataContentHidden" value="">
               <label class="col-form-label">Nama Menu</label>
@@ -271,7 +272,7 @@
             </div>
             <div class="mb-3">
               <label class="col-form-label">Harga Menu</label>
-              <input type="number" required class="form-control" id="hargaEdit" name="hargaEdit"></input>
+              <input type="number" class="form-control" id="hargaEdit" name="hargaEdit"></input>
             </div>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back</button>
             <button type="submit" id="editMenu" class="btn btn-primary">Edit Menu</button>
@@ -324,14 +325,17 @@
 
 
   <!-- Script -->
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
 
   <script>
     const user = '{{ auth()->user()->email }}';
   </script>
-
+  @if( auth()->user()->status_user == 1)
+  <script>
+    const id_toko = '{{ $menus[0]->toko_id }}';
+  </script>
+  @endif
   <script src="{{ asset('js/order/script.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

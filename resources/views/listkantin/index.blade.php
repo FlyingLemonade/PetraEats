@@ -79,14 +79,14 @@
         </div>
 
         @foreach( $canteens as $canteen)
+        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal" style="cursor : pointer">
 
-        <form action="{{ route('toOrder') }}" class="media-element canteen" method="post" data-content="Sandal">
             {{ csrf_field() }}
             <input type="hidden" value="{{ $canteen->toko_id }}" name="tokoID">
             @if( $canteen->tutup == 1)
             <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" alt="">
             @else
-            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" style="filter : grayscale(100%); pointer-events : none" alt="">
+            <img src="{{ asset('assets/kantin/toko/'. $canteen->picture) }}" id="{{ $canteen->toko_id }}" style="filter : grayscale(100%)" alt="">
             @endif
             <p class="title">{{ $canteen->nama_toko }}</p>
         </form>
@@ -148,9 +148,7 @@
             }
         }
     </script>
-
     <script src=" {{ asset('js/listKantin/script.js') }} "> </script>
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>

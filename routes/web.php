@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DetailOrderController;
+use App\Http\Controllers\getController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\listKantinController;
 use App\Http\Controllers\loginController;
@@ -71,8 +72,9 @@ Route::middleware('LoggedIn')->group(function () {
     });
 });
 
-Route::get('/getOrder/{orderID}', [DetailOrderController::class, 'getOrder'])->middleware('APIBlocker');
-Route::get('/getToko/{tokoID}', [orderPesananController::class, 'getToko'])->middleware('APIBlocker');
+Route::get('/getOrder/{orderID}', [getController::class, 'getOrder'])->middleware('APIBlocker');
+Route::get('/getToko/{tokoID}', [getController::class, 'getToko'])->middleware('APIBlocker');
+Route::get('/getPembeli/{email}', [getController::class, 'getPembeli'])->middleware('APIBlocker');
 
 /*
 To do :

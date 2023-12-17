@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -27,14 +28,12 @@ return new class extends Migration
             $table->primary('email');
         });
         Schema::create('pe_toko', function (Blueprint $table) {
-
+            $table->string('picture');
             $table->string('toko_id');
             $table->string('nama_toko');
             $table->unsignedBigInteger('kantin_id');
             $table->integer('tutup');
             $table->primary('toko_id');
-            $table->string('picture');
-            $table->string('qr_picture');
             $table->foreign('kantin_id')->references('kantin_id')->on('pe_kantin')->onDelete('cascade');
             $table->foreign('toko_id')->references('email')->on('users')->onDelete('cascade');
         });
@@ -51,7 +50,7 @@ return new class extends Migration
         });
         Schema::create('pe_order', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id')->autoIncrement();
-            $table->dateTime('tanggal');
+            $table->dateTime('tanggal')->default(DB::raw('CURRENT_TIMESTAMP'));
             // 1 untuk pesanan diterima, 2 pesanan diproses, 3 siap diambil
             $table->integer('status_pesanan');
             $table->double('nominal');

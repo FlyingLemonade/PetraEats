@@ -13,6 +13,7 @@ class orderPesananController extends Controller
 
         $menus = DB::table('pe_menu')
             ->where('pe_menu.toko_id', '=', auth()->user()->email)
+            ->select('pe_menu.*', 'pe_menu.picture AS menu_picture')
             ->get();
 
         $status = DB::table('pe_toko')
@@ -117,14 +118,5 @@ class orderPesananController extends Controller
         ]);
 
         return response()->json(['status' => 'success']);
-    }
-
-    public function getToko($tokoID)
-    {
-        $status = DB::table('pe_toko')
-            ->where('pe_toko.toko_id', '=', $tokoID)
-            ->select('pe_toko.tutup')
-            ->get();
-        return response()->json($status);
     }
 }

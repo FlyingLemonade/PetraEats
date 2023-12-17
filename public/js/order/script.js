@@ -65,7 +65,8 @@ $(document).ready(function () {
             namaMenu: namaMenuText,
             harga: harga,
             fotoMenu: fotoMenuSrc,
-            quantity: 1
+            quantity: 1,
+            totalPrice : harga,
         };
      
         shoppingCart.push(item);

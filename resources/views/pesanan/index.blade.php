@@ -46,6 +46,7 @@
       </div>
       <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
         <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
+        <button id="check" class="btn btn-primary">check</button>
       </div>
     </div>
   </nav>
@@ -220,7 +221,7 @@
   @if(auth()->user()->status_user == 1)>
   <script src=" {{ asset('js/pesanan/receiveAccept.js') }} "></script>
   @endif
-
+  <script src="{{ asset('js/pesanan/terimaPesanan.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 

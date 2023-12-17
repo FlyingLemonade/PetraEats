@@ -162,8 +162,6 @@ td .row .pesanan img {
   color: var(--body-color);
   font-family: var(--secondary-font);
   font-weight: 600;
-  position: relative;
-  right: 30%;
 }
 
 .btn-operation {

@@ -5,6 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
     <!-- Roboto -->
@@ -65,12 +69,23 @@
                                         <div class="pesanan col-lg-4 col-sm-5 col-12 d-flex justify-content-center align-items-center"><img src=" {{ asset($order['fotoMenu']) }}" class="img-fluid rounded fotoMenu" /></div>
                                         <div class="pesanan col-lg-4 col-sm-4 col-6 d-flex justify-content-sm-start justify-content-center align-items-center"> {{ $order['namaMenu'] }} </div>
                                         <div class="harga col-lg-4 col-sm-3 col-6 d-flex justify-content-center align-items-center"> {{ $order['harga'] }} </div>
-
+                                        <div class="col-12 d-flex justify-content-sm-end justify-content-center align-items-start mt-sm-0 mt-2">
+                                            <div class="align-items-center">
+                                                <span class="quantity-value">Total : {{ $order['quantity'] }}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
                             <!-- End Menu -->
+
+                            <tr>
+                                <td class="col mt-3 mb-1">
+                                    <label class="col-6" for="description">Deskripsi :</label>
+                                    <textarea class="col-6" id="description" name="description" rows="8" cols="80"></textarea>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -82,16 +97,16 @@
     <!-- Footer -->
     <section>
         <footer class="foot text-center">
-            <div class="row justify-content-center">
-                <div class="foot-left col-sm-6 pt-3">
-                    <p class="d-flex justify-content-center align-items-center">
+            <div class="row d-flex justify-content-sm-around ">
+                <div class="col-sm-5 col-12 pt-3 d-flex justify-content-sm-end align-items-center justify-content-center">
+                    <p class="">
                         <span class="" id="price-title">Total Harga<br />
                             <span class="harga"> {{ $totalHarga }}</span>
                         </span>
                     </p>
                 </div>
-                <div class="foot-right col-sm-6 pt-3 pe-5 mb-sm-0 mb-5">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamicModal">
+                <div class="col-sm-5 col-12 mb-5 mb-sm-0 d-flex justify-content-sm-start align-items-center justify-content-center">
+                    <button id="pay-button" type="button" class="btn btn-primary ">
                         Bayar
                     </button>
                 </div>
@@ -100,35 +115,18 @@
     </section>
     <!-- Footer -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="dynamicModalContent">
-                    <!-- Isi -->
-
-
-                    <div class="row">
-                        <div class="col-12">
-                            <img src="{{ asset('assets/kantin/qr'. $dataToko->qr_picture) }}">
-                        </div>
-                        <div class="col-12"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-
-                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Script -->
-
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        const snapToken = '{{ $snapToken }}';
+        const user_id = '{{ auth()->user()->email }}';
+        const pemilikToko = '{{ $dataToko->toko_id }}';
+        const orders = '@json($orders)';
+        const totalHarga = '{{ $totalHarga }}'
+    </script>
+    <script src="{{ asset('js/mahasiswa/notaPesanan/script.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

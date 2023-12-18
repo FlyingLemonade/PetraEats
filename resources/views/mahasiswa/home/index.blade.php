@@ -8,6 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <title>Mahasiswa | Home</title>
+  <link rel="icon" type="image/x-icon" href="/assets/home/logoPetraEats.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
   <style>
     /* * {
@@ -337,28 +338,28 @@
           <form class="carousel-item active" class="form" method="post" action="{{ route('toCanteen') }}">
             {{ csrf_field() }}
             <input type="hidden" name="canteenID" value="3" />
-            <img src="{{ asset('assets/kantin/KantinP.jpg') }}" class="image-small d-block w-100" alt="cth1" />
+            <img src="{{ asset('assets/kantin/KantinP.jpg') }}" class="image-small d-block w-100" alt="cth1" style=" width:100%; height: 250px !important;" />
           </form>
 
           <!-- Single item -->
           <form class="carousel-item" class="form" method="post" action="{{ route('toCanteen') }}">
             {{ csrf_field() }}
             <input type="hidden" name="canteenID" value="4" />
-            <img src="{{ asset('assets/kantin/KantinQ.jpg') }}" class="image-small d-block w-100" alt="cth2" />
+            <img src="{{ asset('assets/kantin/KantinQ.jpg') }}" class="image-small d-block w-100" alt="cth2" style=" width:100%; height: 250px !important;"/>
           </form>
 
           <!-- Single item -->
           <form class="carousel-item" class="form" method="post" action="{{ route('toCanteen') }}">
             {{ csrf_field() }}
             <input type="hidden" name="canteenID" value="1" />
-            <img src="{{ asset('assets/kantin/KantinW.jpg') }}" class="image-small d-block w-100" alt="cth3" />
+            <img src="{{ asset('assets/kantin/KantinW.jpg') }}" class="image-small d-block w-100" alt="cth3" style=" width:100%; height: 250px !important;"/>
           </form>
 
           <!-- New slide -->
           <form class="carousel-item" class="form" method="post" action="{{ route('toCanteen') }}">
             {{ csrf_field() }}
             <input type="hidden" name="canteenID" value="2" />
-            <img src="{{ asset('assets/kantin/KantinT.jpeg') }}" class="image-small d-block w-100" alt="cth4" />
+            <img src="{{ asset('assets/kantin/KantinT.jpeg') }}" class="image-small d-block w-100" alt="cth4" style=" width:100%; height: 250px !important;"/>
           </form>
         </div>
         <!-- Inner -->
@@ -368,7 +369,7 @@
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselBasicExample" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselBasicExample" data-bs-slide="next" >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
@@ -376,8 +377,8 @@
       <!-- Carousel wrapper -->
     </section>
 
-    <div class="mycontainer d-flex justify-content-center mt-4 mb-4">
-      <button onclick="toPesanan()" class="btn btn-outline-dark center h8 p-2" type="button"><i class="fa fa-history" aria-hidden="true"></i> Riwayat Pemesanan</button>
+    <div class="mycontainer d-flex justify-content-center mt-4 mb-4" style = "display: flex; align-items: center;">
+      <button onclick="toPesanan()" class="btn btn-outline-dark center h8 p-2" type="button" style=" width:75%; height: 45px !important;"><i class="fa fa-history" aria-hidden="true"></i> Riwayat Pemesanan</button>
     </div>
 
     <div class="mycontainer center mt-4">

@@ -33,6 +33,7 @@
   <!-- Font Awesome-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Petra Eats</title>
+  <link rel="icon" type="image/x-icon" href="/assets/home/logoPetraEats.png">
 
 </head>
 
@@ -153,7 +154,7 @@
             <span id="totalHarga">Rp 0</span>
           </div>
           <div class="col">
-            <button type="button" id="submit-btn" class="btn" style="align-items: center; background-color: #2F4858; color: white;">Konfirmasi Pesanan</button>
+            <button type="button" id="submit-btn" class="btn" style="align-items: center; background-color: #2F4858; color: white;" disabled>Konfirmasi Pesanan</button>
           </div>
         </div>
       </div>
@@ -250,8 +251,8 @@
     </div>
   </div>
 
-  <!--Edit Modal -->
-  <div class="modal fade" id="editMenuModal" tabindex="-1" aria-hidden="true">
+<!--Edit Modal -->
+<div class="modal fade" id="editMenuModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -259,12 +260,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="editUser">
+          <form id="editMenu">
             {{ csrf_field() }}
             <div class="mb-4">
-              <input type="hidden" id="dataContentHidden" value="">
+              <label class="col-form-label">Menu</label>
+              <input readonly type="text" class="form-control" id="menu_id" name="menu_id">
+            </div>
+            <div class="mb-4">
               <label class="col-form-label">Nama Menu</label>
-              <input type="text" class="form-control" id="namaMenuEdit" name="namaMenuEdit">
+              <input type="text" required class="form-control" id="namaMenuEdit" name="namaMenuEdit">
             </div>
             <div class="mb-3">
               <label class="col-form-label">Deskripsi</label>
@@ -272,10 +276,14 @@
             </div>
             <div class="mb-3">
               <label class="col-form-label">Harga Menu</label>
-              <input type="number" class="form-control" id="hargaEdit" name="hargaEdit"></input>
+              <input type="number" required class="form-control" id="hargaEdit" name="hargaEdit"></input>
+            </div>
+            <div class="mb-4">
+              <label class="col-form-label">Foto Menu</label>
+              <input type="file" class="form-control" id="fotoMenuEdit" name="fotoMenuEdit"></input>
             </div>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back</button>
-            <button type="submit" id="editMenu" class="btn btn-primary">Edit Menu</button>
+            <button type="submit" id="editMenuBtn" class="btn btn-primary">Edit Menu</button>
           </form>
         </div>
       </div>

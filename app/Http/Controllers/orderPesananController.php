@@ -54,25 +54,36 @@ class orderPesananController extends Controller
 
     public function addMenu(Request $request)
     {
-        // Retrieve the form data
-        $namaMenu = $request->input('namaMenuBaru');
-        $deskripsi = $request->input('deskripsiBaru');
-        $harga = $request->input('hargaBaru');
-        $srcFoto = $request->input('fotoMenuBaru');
-        $kantinId = DB::table('pe_toko')->where('toko_id', auth()->user()->email)->value('kantin_id');
-
-        // Insert data into the pe_menu table
-        $menuId = DB::table('pe_menu')->insertGetId([
-            'nama_menu' => $namaMenu,
-            'deskripsi' => $deskripsi,
-            'harga' => $harga,
-            'toko_id' => auth()->user()->email,
-            'kantin_id' => $kantinId,
+        // Validate the request
+        $request->validate([
+            'namaMenuBaru' => 'required',
+            'deskripsiBaru' => 'required',
+            'hargaBaru' => 'required|numeric',
+            'fotoMenuBaru' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if ($menuId) {
-            return response()->json(['status' => 'success']);
-        }
+        // Handle file upload
+        $fileName = time() . '.' . $request->file('fotoMenuBaru')->getClientOriginalExtension();
+
+        // Move the file to public/assets/foods directory
+        $request->file('fotoMenuBaru')->move(public_path('assets/foods'), $fileName);
+
+        // Get toko_id and kantin_id
+        $toko_id = auth()->user()->email;
+        $kantin_id = DB::table('pe_toko')->where('toko_id', $toko_id)->value('kantin_id');
+
+        // Insert data using raw SQL query
+        DB::table('pe_menu')->insert([
+            'nama_menu' => $request->namaMenuBaru,
+            'deskripsi' => $request->deskripsiBaru,
+            'harga' => $request->hargaBaru,
+            'toko_id' => $toko_id,
+            'kantin_id' => $kantin_id,
+            'picture' => $fileName,
+        ]);
+
+        // Return a response (you can customize the response format)
+        return response()->json(['message' => 'Menu added successfully']);
     }
 
     public function updateStatus(Request $request)
@@ -95,18 +106,36 @@ class orderPesananController extends Controller
 
     public function editMenu(Request $request)
     {
-        $menu_id = $request->input('menu_id');
-        $namaMenu = $request->input('namaMenuEdit');
-        $deskripsi = $request->input('deskripsiEdit');
-        $harga = $request->input('hargaEdit');
-
-        // Update the data in the pe_menu table
-        DB::table('pe_menu')->where('menu_id', $menu_id)->update([
-            'nama_menu' => $namaMenu,
-            'deskripsi' => $deskripsi,
-            'harga' => $harga,
+        $request->validate([
+            'menu_id' => 'required',
+            'namaMenuEdit' => 'required',
+            'deskripsiEdit' => 'required',
+            'hargaEdit' => 'numeric',
+            'fotoMenuEdit' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        return response()->json(['status' => 'success']);
+        $menu_id = $request->menu_id;
+
+        if ($request->hasFile('fotoMenuEdit')) {
+            // Handle file upload
+            $fileName = time() . '.' . $request->file('fotoMenuEdit')->getClientOriginalExtension();
+            // Move the file to public/assets/foods directory
+            $request->file('fotoMenuEdit')->move(public_path('assets/foods'), $fileName);
+
+            DB::table('pe_menu')->where('menu_id', $menu_id)->update([
+                'nama_menu' => $request->namaMenuEdit,
+                'deskripsi' => $request->deskripsiEdit,
+                'harga' => $request->hargaEdit,
+                'picture' => $fileName
+            ]);
+        } else {
+            DB::table('pe_menu')->where('menu_id', $menu_id)->update([
+                'nama_menu' => $request->namaMenuEdit,
+                'deskripsi' => $request->deskripsiEdit,
+                'harga' => $request->hargaEdit,
+            ]);
+        }
+
+        return response()->json(['message' => 'Menu updated successfully']);
     }
 }

@@ -25,6 +25,8 @@ class LoggedIn
             } else if ($user->status_user == 2) {
 
                 return redirect("kantin/order")->withErrors("Anda Sudah Login");
+            } else if ($user->status_user == 3){
+                return redirect("admin")->withErrors("Anda Sudah Login");
             }
         }
 

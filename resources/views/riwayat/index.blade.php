@@ -28,6 +28,7 @@
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
   <title>Riwayat | PetraEats</title>
+  <link rel="icon" type="image/x-icon" href="/assets/home/logoPetraEats.png">
 </head>
 
 <body>
@@ -100,7 +101,12 @@
               </td>
               <td class="col-12 col-sm-2 mb-5">
                 <div class="align-items-center status">
-                  <span id="status" class="badge rounded-pill custom-request mb-3"> Pesanan </span>
+                <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-status-{{ $order->status_pesanan }} p-1 me-4">
+                  @if($order->status_pesanan == 0) Ditolak @endif
+                  @if($order->status_pesanan == 1) Pesan @endif
+                  @if($order->status_pesanan == 2) Proses @endif
+                  @if($order->status_pesanan == 3) Selesai @endif
+                </span>
                 </div>
               </td>
             </tr>
@@ -139,7 +145,12 @@
               </td>
               <td class="col-12 col-sm-2 mb-5">
                 <div class="align-items-center status">
-                  <span id="status" class="badge rounded-pill custom-request mb-3"> Pesanan </span>
+                <span id="status" class="badge rounded-pill  mb-3  custom-status-{{ $customer->status_pesanan }}">
+                  @if($customer->status_pesanan == 0) Ditolak @endif
+                  @if($customer->status_pesanan == 1) Pesan @endif
+                  @if($customer->status_pesanan == 2) Proses @endif
+                  @if($customer->status_pesanan == 3) Selesai @endif
+                  </span>
                 </div>
               </td>
             </tr>

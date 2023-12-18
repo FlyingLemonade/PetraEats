@@ -46,6 +46,9 @@ class LoginController extends Controller
                     ->get();
                 return redirect("kantin/order")->with(['status' => $dataToko]);
             }
+            else if($user->status_user == 3){
+                return redirect("admin/");
+            }
         }
 
         // Authentication failed

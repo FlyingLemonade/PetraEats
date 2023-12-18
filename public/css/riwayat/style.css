@@ -9,6 +9,7 @@
     --request-color: #fc8888;
     --process-color: #fff266;
     --done-color: #5bfc79;
+    --deny-color: #F7827B;
   }
   
   /* * {
@@ -130,14 +131,18 @@
     font-size: 20px;
   }
   
-  .custom-request {
+
+  .custom-status-0{
+    background-color: var(--deny-color);
+  }
+  .custom-status-1{
     background-color: var(--request-color);
   }
-  .custom-done {
-    background-color: var(--done-color);
-  }
-  .custom-process {
+  .custom-status-2{
     background-color: var(--process-color);
+  }
+  .custom-status-3{
+    background-color: var(--done-color);
   }
   
   @media (max-width: 1600px) {

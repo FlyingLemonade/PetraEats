@@ -260,6 +260,12 @@ td .row .pesanan img {
   table tbody tr td.jumlah {
     font-size: x-small;
   }
+
+  #description {
+    max-height: 500px;
+    height: 100%;
+
+  }
 }
 
 @media screen and (max-width: 456px) {

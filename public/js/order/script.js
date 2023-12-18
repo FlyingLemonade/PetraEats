@@ -25,9 +25,11 @@ $(document).ready(function () {
         if (hasExistingRows()) {
             const namaKantinElement = $('#namaKantin');
             namaKantinElement.text("");
+            $("#submit-btn").prop('disabled', false);
         } else {
             const namaKantinElement = $('#namaKantin');
             namaKantinElement.text("Kosong");
+            $("#submit-btn").prop('disabled', true);
         }
     }
 
@@ -131,6 +133,11 @@ console.log(shoppingCart);
                 menuItem.totalPrice = totalPrice;
             }
         }
+        if (hasExistingRows()) {
+            $("#submit-btn").prop('disabled', false);
+        } else {
+            $("#submit-btn").prop('disabled', true);
+        }
     }
 
     $(".custom-add-btn").on("click", function () {
@@ -212,6 +219,12 @@ console.log(shoppingCart);
         const mainMenuElement = $('.main-menu-item').filter(function () {
             return $(this).find('.content h5').text().trim() === menuName;
         });
+
+        if (hasExistingRows()) {
+            $("#submit-btn").prop('disabled', false);
+        } else {
+            $("#submit-btn").prop('disabled', true);
+        }
     
         // Update the quantity in the main menu
         mainMenuElement.find('.counter').text(newQuantity);
@@ -291,6 +304,11 @@ console.log(shoppingCart);
                 }, 50);
             }, 200);
         }
+        if (hasExistingRows()) {
+            $("#submit-btn").prop('disabled', false);
+        } else {
+            $("#submit-btn").prop('disabled', true);
+        }
     });
 
     
@@ -358,9 +376,10 @@ console.log(shoppingCart);
     });
 
     $(".editButton").on("click", function () {
+        //mengisi data ke modal
         // Get the data-content attribute from the card
-        const dataContent = $(this).closest('.card').find('.content').data('content');
-        $("#dataContentHidden").val(dataContent);
+        const menuId = $(this).closest('.card').find('.content').data('content');
+
 
         // Use the data-content value to identify the elements to update
         const namaMenu = $(this).closest('.card').find('#nama_menu').text();
@@ -370,7 +389,7 @@ console.log(shoppingCart);
         const regex = /\d+/;
         const harga = hargaText.match(regex)[0];
 
-        console.log("Data Content:", dataContent);
+        console.log("Data Content:", menuId);
         console.log("Nama Menu:", namaMenu);
         console.log("Deskripsi:", deskripsi);
         console.log("Harga Text:", hargaText);
@@ -379,43 +398,34 @@ console.log(shoppingCart);
         $(namaMenuEdit).val(namaMenu);
         $(deskripsiEdit).val(deskripsi);
         $(hargaEdit).val(harga);
+        $(menu_id).val(menuId);
     });
 
-    $("#editMenu").on("click", function () {
-        const namaMenu = $("#namaMenuEdit").val();
-        const deskripsiEdit = $("#deskripsiEdit").val();
-        const hargaEdit = $("#hargaEdit").val();
+    $('#editMenu').submit(function (e) {
+        e.preventDefault();
 
-        // Get the data-content attribute from the hidden input
-        const dataContent = $("#dataContentHidden").val();
+        var formData = new FormData(this);
+        console.log('Form Data:', formData);
 
         $.ajax({
-            url: 'order/editMenu/',
             type: 'POST',
-            data: {
-                'menu_id': dataContent,
-                'namaMenuEdit': namaMenu,
-                'deskripsiEdit': deskripsiEdit,
-                'hargaEdit': hargaEdit,
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function () {
-                alert('Menu berhasil diedit');
+            url: 'order/editMenu/',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log(data); // Log the response from the server
                 window.location.href = "order";
-            
+                $('#tambahMenuModal').modal('hide');
+                alert("Menu Berhasil diedit");
             },
             error: function (error) {
-                alert("Menu gagal diedit");
-                console.error("Error fetching data:", error);
+                console.log('Error:', error);
                 window.location.href = "order";
+                $('#tambahMenuModal').modal('hide');
+                alert("Menu gagal di edit");
             }
         });
-
-
-        // Close the modal after editing
-        $('#editMenuModal').modal('hide');
     });
 
     $(".delButton").on("click", function () {
@@ -458,41 +468,30 @@ console.log(shoppingCart);
     });
 
 
-    $("#tambahMenu").on("click", function () {
-        const menuBaru = $("#namaMenuBaru").val();
-        const deskripsiBaru = $("#deskripsiBaru").val();
-        const hargaBaru = $("#hargaBaru").val();
+    $('#tambahMenuForm').submit(function (e) {
+        e.preventDefault();
 
-        const fileInput = $("#fotoMenuBaru")[0]; // Get the file input element
-        const src = fileInput.files[0].name;
-        console.log(src);
+        var formData = new FormData(this);
 
         $.ajax({
-            url: 'order/addMenu/',
             type: 'POST',
-            data: {
-                'namaMenuBaru': menuBaru,
-                'deskripsiBaru': deskripsiBaru,
-                'hargaBaru': hargaBaru,
-                'fotoMenuBaru': src
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function () {
-                alert('Menu berhasil ditambah');
+            url: 'order/addMenu/',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log(data); // Log the response from the server
                 window.location.href = "order";
-            
+                $('#tambahMenuModal').modal('hide');
+                alert("Menu Berhasil ditambah");
             },
             error: function (error) {
-                alert("Menu gagal ditambah, data ada yang kosong");
-                console.error("Error fetching data:", error);
+                console.log('Error:', error);
                 window.location.href = "order";
+                $('#tambahMenuModal').modal('hide');
+                alert("Menu gagal ditambah");
             }
         });
-
-        $('#tambahMenuModal').modal('hide');
-
     });
 
     $("#submit-btn").on("click", function () {

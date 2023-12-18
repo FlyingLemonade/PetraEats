@@ -16,9 +16,14 @@ class riwayatController extends Controller
             ->leftJoin('pe_toko', 'pe_order.email_toko', '=', 'pe_toko.toko_id')
             ->select('pe_order.*', 'pe_toko.nama_toko', 'pe_toko.picture')
             ->where('pe_order.email_user', '=', auth()->user()->email)
+            ->where(function ($query) {
+                $query->where('pe_order.status_pesanan', '=', 0)
+                      ->orWhere('pe_order.status_pesanan', '=', 3);
+            })
             ->get();
+    
         return view("riwayat.index", compact("orders"));
-    }    
+    }
 
     public function riwayatKantin(Request $request)
     {

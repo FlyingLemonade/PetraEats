@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
   <!-- Roboto -->
@@ -25,8 +24,8 @@
 
   <link href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ asset('css/pesanan/style.css') }}" />
-  <title>Pesanan || PetraEats</title>
+  <link rel="stylesheet" href="{{ asset('css/kantin/pesanan/style.css') }}" />
+  <title>Pesanan || Kantin</title>
   <link rel="icon" type="image/x-icon" href="/assets/home/logoPetraEats.png">
 </head>
 
@@ -35,14 +34,11 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid row">
       <div class="col-sm-2 col-12 d-flex justify-content-sm-start justify-content-center" id="navbarSupportedContent">
-        <img src="{{ asset('assets/logoPetraEats/logoPetraEats.png') }}" height="15" alt="PE Logo" loading="lazy" />
-        <span id="petra-eats">
-          <a class="nav-link" href="/">PetraEats</a>
-        </span>
+        <img src="{{ asset('assets/kantin/pesanan/logoPetraEats.png') }}" height="15" alt="MDB Logo" loading="lazy" />
+        <span id="petra-eats"><a class="nav-link" href="#">PetraEats</a></span>
       </div>
       <div class="col-sm-10 col-12 d-flex justify-content-sm-end justify-content-center">
         <h5 class="me-sm-5 mt-2">{{ auth()->user()->nama }}</h5>
-
       </div>
     </div>
   </nav>
@@ -54,8 +50,8 @@
       <div class="row">
         <div class="col-6 ms-5">
           <div class="row d-flex justify-content-start custom-margin">
-            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="/">Home<span class="ms-3">></span></a>
-            <div class=" col-sm-8 current ms-lg-1">Pesanan</div>
+            <a class=" col-lg-2 col-md-3 col-sm-4 before" href="#">Home<span class="ms-3">></span></a>
+            <div class=" col-sm-8 current ms-lg-1">Riwayat Pesanan</div>
           </div>
         </div>
       </div>
@@ -70,28 +66,20 @@
         <div class="col-md-4 col-6 align-items-center d-flex">
           <h5 class="ms-5">Pesanan</h5>
         </div>
-        <div class="col-md-7 col-5 d-flex justify-content-end me-5">
-          @if(auth()->user()->status_user == 1)
-          <button onclick="toRiwayatMahasiswa()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
-          @endif
-          @if(auth()->user()->status_user == 2)
-          <button onclick="toRiwayatKantin()" type="button" class="btn btn-warning fw-bold">Riwayat</button>
-          @endif
+        <div class="col-md-7 col-5 d-flex justify-content-end me-3">
+          <button type="button" class="btn btn-warning fw-bold">Riwayat</button>
         </div>
       </div>
-      <div class="row custom-box ms-5 me-5">
+      <div class="row custom-box">
 
-
-        @if(auth()->user()->status_user == 2)
-        <!-- Tampilan Untuk Kantin -->
         @foreach($customers as $customer)
         <!-- Card -->
-        <div class="col-xl-6 mb-4" id="card-{{ $customer->order_id }}">
+        <div class="col-xl-6 mb-4">
           <div class="card">
             <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $customer->order_id }}">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="{{ asset('assets/mahasiswa/profile'. $customer->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                  <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
                   <div class="ms-3">
 
                     <!-- Nama Customer -->
@@ -100,65 +88,18 @@
                     <p id="email" class="text-muted mb-1">Nomor Transaksi : {{ $customer->order_id }}</p>
                   </div>
                 </div>
-                <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-status-{{ $customer->status_pesanan }} p-1 me-4">
-                  @if($customer->status_pesanan == 0) Ditolak @endif
-                  @if($customer->status_pesanan == 1) Pesan @endif
-                  @if($customer->status_pesanan == 2) Proses @endif
-                  @if($customer->status_pesanan == 3) Selesai @endif </span>
+                <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-request p-1 me-4"> Pesanan </span>
               </div>
             </div>
-
-            @if($customer->status_pesanan == 1)
             <div class="card-footer p-2 d-flex justify-content-end">
-              <button data-content="terima" class="btn btn-success m-0 decide-btn" type="button" data-ripple-color="primary">Terima <i class="fas fa-check"></i></button>
-              <button data-content="tolak" class="btn btn-danger ms-3 decide-btn" type="button" data-ripple-color="primary">Tolak <i class="fas fa-times"></i></button>
+              <button id="terima" class="btn btn-success m-0" type="button" data-ripple-color="primary">Terima <i class="fas fa-check"></i></button>
+              <button id="tolak" class="btn btn-danger ms-3" type="button" data-ripple-color="primary">Tolak <i class="fas fa-times"></i></button>
             </div>
-            @elseif($customer->status_pesanan == 2)
-            <div class="card-footer p-2 d-flex justify-content-end">
-              <button data-content="selesai" class="btn btn-success m-0 decide-btn" type="button" data-ripple-color="primary">Selesai <i class="fas fa-check"></i></button>
-            </div>
-            @endif
           </div>
 
         </div>
         <!-- End Card -->
         @endforeach
-        <!-- End Tampilan Untuk Kantin -->
-        @endif
-
-
-        @if(auth()->user()->status_user == 1)
-        <!-- Tampilan Untuk Mahasiswa -->
-        @foreach($orders as $order)
-        <!-- Card -->
-        <div class="col-xl-6 mb-4" id="card-{{ $order->order_id }}">
-          <div class="card">
-            <div class="card-body" data-bs-toggle="modal" data-bs-target="#dynamicModal" data-content="{{ $order->order_id }}">
-              <div class="row d-flex justify-content-between align-items-center">
-                <div class="col-12 col-md-6 d-flex align-items-center">
-                  <img src="{{ asset('assets/kantin/toko/'. $order->picture) }}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
-                  <div class="ms-3">
-
-                    <!-- Nama Customer -->
-                    <p class="fw-bold mb-1">{{ $order->nama_toko }}</p>
-                    <!-- ID Order -->
-                    <p id="trans{{ $order->order_id }}" class="text-muted mb-1">Nomor Transaksi : {{ $order->order_id }}</p>
-                  </div>
-                </div>
-                <span id="status" class="col-md-2 col-12 text-center fw-bold rounded-pill custom-status-{{ $order->status_pesanan }} p-1 me-4">
-                  @if($order->status_pesanan == 0) Ditolak @endif
-                  @if($order->status_pesanan == 1) Pesan @endif
-                  @if($order->status_pesanan == 2) Proses @endif
-                  @if($order->status_pesanan == 3) Selesai @endif
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Card -->
-        @endforeach
-        <!-- End Tampilan Untuk Mahasiswa -->
-        @endif
 
       </div>
     </div>
@@ -188,8 +129,7 @@
           </table>
         </div>
         <div class="modal-footer">
-
-          <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -198,28 +138,11 @@
   <!-- End Modal -->
   <!-- End Dalam Proses -->
 
-
   <!-- Script -->
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
-  <!-- <script> </script> -->
-
-
-  <script>
-    const user_id = '{{ auth()->user()->email }}';
-  </script>
-  <script src=" {{ asset('js/pesanan/script.js') }} "></script>
-  @if(auth()->user()->status_user == 2)
-  <script src=" {{ asset('js/pesanan/sendAccept.js') }} "></script>
-  @endif
-  @if(auth()->user()->status_user == 1)>
-  <script src=" {{ asset('js/pesanan/receiveAccept.js') }} "></script>
-  @endif
-  <script src="{{ asset('js/pesanan/terimaPesanan.js') }}"></script>
+  <script src=" {{ asset('js/kantin/pesanan/script.js') }} "> </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-
 </body>
 
 </html>

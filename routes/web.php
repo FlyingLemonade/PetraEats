@@ -78,34 +78,3 @@ Route::middleware('LoggedIn')->group(function () {
 Route::get('/getOrder/{orderID}', [getController::class, 'getOrder'])->middleware('APIBlocker');
 Route::get('/getToko/{tokoID}', [getController::class, 'getToko'])->middleware('APIBlocker');
 Route::get('/getPembeli/{email}', [getController::class, 'getPembeli'])->middleware('APIBlocker');
-
-/*
-To do :
-
-(List Bisa Berubah Seiring Waktu)
-
-1. BackEnd FrontEnd 
-	-mahasiswa/pesanan blom di setting dengan html pesanan kantin
-	 ket: 1 file html beda output (frontend backend penting)
-	-homepage mahasiswa mobile version (frontend penting) -> nicolas
-	-form pembayaran QR (backend penting) 
-    -mahasiswa/order tempat mahasiswa pesen makan (ajax selesai, kurang isi data ke site nota) (backend penting)-> nikolas
-    -form nota bayar (backend penting)
-	-homepage kantin, fitur kantin buka/ tutup
-	 ket:dari tampilan kantin buat pesen di mahasiswa tapi ganti output(frontend backend penting)
-    -list riwayat pesanan (front end back end)
-
-	
-2. Database
-
-
-3. Security
-
-
-4. UI/UX
-	-Design Admin blom semua (ngga gitu penting)
-	-Design Riwayat pesanan kantin&mahasiswa (penting)
-	-Design Kantin baru jadi setengah (penting)
-
-
-*/
